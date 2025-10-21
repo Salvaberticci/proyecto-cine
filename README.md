@@ -6,24 +6,12 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> **E-Actividad 2.1 - Almacenamiento e Interfaces**: Sistema completo de gestión de cines con persistencia en base de datos MariaDB, operaciones CRUD completas, APIs RESTful y interfaces web modernas usando EJS. Implementa clases, promesas y separación de intereses.
-
-## 📋 Información del Proyecto
-
-- **🎓 Institución**: Universidad Valle del Momboy
-- **👨‍🏫 Profesor**: Roberto DM
-- **📚 Materia**: Desarrollo de Software
-- **🎯 Actividad**: E-Actividad 2.1 - Almacenamiento e Interfaces
-- **👥 Equipo**: Salvaberticci (GitHub)
-- **📅 Fecha**: Octubre 2025
-- **🎬 Tema**: Sistema de Gestión Cinematográfica
+> Un sistema completo de gestión de cines construido con Node.js, Express y MariaDB, con interfaces web modernas y APIs RESTful para la gestión completa de operaciones cinematográficas.
 
 ## 📋 Tabla de Contenidos
 
 - [🎬 Sistema de Gestión de Cines - Cine Glorimar](#-sistema-de-gestión-de-cines---cine-glorimar)
-  - [📋 Información del Proyecto](#-información-del-proyecto)
   - [📋 Tabla de Contenidos](#-tabla-de-contenidos)
-  - [✅ Requisitos Cumplidos](#-requisitos-cumplidos)
   - [✨ Características](#-características)
   - [🏗️ Arquitectura](#️-arquitectura)
   - [🛠️ Tecnologías Utilizadas](#️-tecnologías-utilizadas)
@@ -40,72 +28,31 @@
   - [📄 Licencia](#-licencia)
   - [🙏 Agradecimientos](#-agradecimientos)
 
-## ✅ Requisitos Cumplidos
-
-### 🎯 Requisitos de la E-Actividad 2.1
-
-| Requisito | Estado | Descripción |
-|-----------|--------|-------------|
-| ✅ **Clases** | Cumplido | Todos los controladores implementados como clases ES6 |
-| ✅ **Promesas** | Cumplido | Uso extensivo de async/await y Promesas en toda la aplicación |
-| ✅ **Base de Datos** | Cumplido | MariaDB/MySQL con persistencia completa |
-| ✅ **CRUD Operations** | Cumplido | GET, POST, PUT, DELETE implementados para todas las entidades |
-| ✅ **HTTP Methods** | Cumplido | GET, PUT, POST, DELETE completamente funcionales |
-| ✅ **Vistas Web** | Cumplido | Interfaces EJS para Productos y Pedidos (2 entidades) |
-| ✅ **Separación de Intereses** | Cumplido | Arquitectura MVC clara con capas separadas |
-| ✅ **Git con 10+ commits** | Cumplido | 11 commits significativos en repositorio público |
-| ✅ **Video YouTube** | Pendiente | Video de demostración con POSTMAN/ThunderClient |
-| ✅ **Etiquetas YouTube** | Pendiente | #univalledelmomboy #profeRobertoDM #tareaUVM |
-
-### 📊 Estadísticas del Proyecto
-
-- **🏗️ Arquitectura**: MVC con separación de intereses
-- **📦 Endpoints API**: 12+ endpoints RESTful
-- **🎨 Vistas Web**: 5 vistas EJS completas
-- **🗄️ Tablas BD**: 8 tablas con relaciones complejas
-- **📝 Commits**: 11 commits significativos
-- **👥 Colaboradores**: 1 (Salvaberticci)
-- **⏱️ Tiempo Desarrollo**: ~2 semanas
-
-### 🎬 Video de Demostración
-
-**📺 Próximamente:** Video de 7-12 minutos mostrando funcionamiento completo con POSTMAN/ThunderClient
-
-**Etiquetas incluidas:**
-- #univalledelmomboy
-- #profeRobertoDM
-- #tareaUVM
-
 ## ✨ Características
 
-### 🎯 Funcionalidad Principal (E-Actividad 2.1)
-- **🎭 Gestión de Películas**: Operaciones CRUD completas para películas con categorías (MariaDB)
-- **🎪 Gestión de Funciones**: Programación y gestión de proyecciones de películas (con BD)
+### 🎯 Funcionalidad Principal
+- **🎭 Gestión de Películas**: Operaciones CRUD completas para películas con categorías
+- **🎪 Gestión de Funciones**: Programación y gestión de proyecciones de películas
 - **🏢 Gestión de Salas**: Manejo de múltiples salas de proyección con control de capacidad
-- **💳 Métodos de Pago**: Soporte para diversas opciones de pago (persistencia en BD)
-- **📦 Gestión de Productos**: Inventario de productos de confitería (CRUD + Vistas Web)
-- **🛒 Gestión de Pedidos**: Procesamiento de pedidos de clientes y seguimiento de ventas (CRUD + Vistas Web)
-- **📊 Análisis de Ventas**: Reportes y análisis completos con datos persistentes
+- **💳 Métodos de Pago**: Soporte para diversas opciones de pago
+- **📦 Gestión de Productos**: Inventario de productos de confitería
+- **🛒 Gestión de Pedidos**: Procesamiento de pedidos de clientes y seguimiento de ventas
+- **📊 Análisis de Ventas**: Reportes y análisis completos
 
-### 🎨 Experiencia de Usuario (E-Actividad 2.1)
-- **🌐 Interfaz Web Moderna**: Diseño responsivo con plantillas EJS (Bootstrap-like)
+### 🎨 Experiencia de Usuario
+- **🌐 Interfaz Web Moderna**: Diseño responsivo con plantillas EJS
 - **📱 Mobile-First**: Optimizado para todos los tamaños de dispositivo
 - **🎭 UI Intuitiva**: Dashboards y formularios amigables para el usuario
 - **⚡ Actualizaciones en Tiempo Real**: Carga dinámica de contenido y actualizaciones
 - **🔍 Búsqueda Avanzada**: Filtrado y búsqueda en todas las entidades
-- **📋 Vistas CRUD Completas**: Interfaces web para Productos y Pedidos (2 entidades requeridas)
-- **🎨 Diseño Profesional**: Gradientes, animaciones y UX moderna
 
-### 🔧 Características Técnicas (E-Actividad 2.1)
-- **🏛️ Arquitectura MVC**: Separación clara de responsabilidades (SoC)
-- **🔄 APIs RESTful**: Endpoints completos con GET, POST, PUT, DELETE
-- **🛡️ Manejo de Errores**: Gestión robusta de errores y validación completa
-- **📝 Validación de Entrada**: Validación cliente y servidor con feedback visual
-- **🔐 Seguridad**: Consultas preparadas y prevención de inyección SQL
-- **⚡ Rendimiento**: Consultas optimizadas con MariaDB y async/await
-- **📦 Clases ES6**: Todos los controladores implementados como clases
-- **🔄 Promesas**: Uso extensivo de async/await y Promesas en toda la app
-- **🗄️ Persistencia**: Base de datos MariaDB/MySQL con operaciones CRUD completas
+### 🔧 Características Técnicas
+- **🏛️ Arquitectura MVC**: Separación clara de responsabilidades
+- **🔄 APIs RESTful**: Endpoints de API completos
+- **🛡️ Manejo de Errores**: Gestión robusta de errores y validación
+- **📝 Validación de Entrada**: Validación del lado cliente y servidor
+- **🔐 Seguridad**: Manejo seguro de datos y prevención de inyección SQL
+- **⚡ Rendimiento**: Consultas optimizadas y almacenamiento en caché
 
 ## 🏗️ Arquitectura
 
@@ -507,17 +454,14 @@ npm run test:e2e
 
 ## 📝 Registro de Cambios
 
-### [v1.0.0] - 2025-10-XX - **E-Actividad 2.1 Completada**
-- ✅ **Sistema completo de gestión de cines con persistencia en BD**
-- ✅ **Implementación de arquitectura MVC con separación de intereses**
-- ✅ **Endpoints de API RESTful completos (GET, POST, PUT, DELETE)**
-- ✅ **Interfaces web modernas con EJS para 2 entidades (Productos y Pedidos)**
-- ✅ **Integración completa MariaDB/MySQL con operaciones CRUD**
-- ✅ **Uso obligatorio de Clases ES6 en todos los controladores**
-- ✅ **Implementación de Promesas y async/await en toda la aplicación**
-- ✅ **11 commits significativos en repositorio GitHub público**
-- ✅ **Documentación completa en español**
-- ✅ **Video de demostración próximamente en YouTube**
+### [v1.0.0] - 2025-01-XX
+- ✅ Versión inicial con sistema completo de gestión de cines
+- ✅ Implementación de arquitectura MVC
+- ✅ Endpoints de API RESTful
+- ✅ Interfaz web moderna con plantillas EJS
+- ✅ Integración MariaDB con esquema completo
+- ✅ Módulos de gestión de productos y pedidos
+- ✅ Diseño responsivo y optimización móvil
 
 ### [v0.9.0] - 2024-12-XX
 - 🔄 Versión beta con funcionalidad principal
