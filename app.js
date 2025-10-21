@@ -19,11 +19,11 @@ const metodosPagoRouter = require('./routes/MetodosPagoRouter');
 const productosRouter = require('./routes/productos');
 const pedidosRouter = require('./routes/pedidos');
 
-// Use routers existentes
-app.use('/peliculas', peliculasRouter);
-app.use('/funciones', funcionesRouter);
-app.use('/salas', salasRouter);
-app.use('/metodospago', metodosPagoRouter);
+// Use routers existentes (manejan tanto rutas API como de vistas)
+app.use('/', peliculasRouter);
+app.use('/', funcionesRouter);
+app.use('/', salasRouter);
+app.use('/', metodosPagoRouter);
 
 // Use routers nuevos (manejan tanto rutas API como de vistas)
 app.use('/', productosRouter);
