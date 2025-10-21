@@ -8,27 +8,27 @@
 
 > Un sistema completo de gestión de cines construido con Node.js, Express y MariaDB, con interfaces web modernas y APIs RESTful para la gestión completa de operaciones cinematográficas.
 
-## 📋 Table of Contents
+## 📋 Tabla de Contenidos
 
 - [🎬 Sistema de Gestión de Cines - Cine Glorimar](#-sistema-de-gestión-de-cines---cine-glorimar)
-  - [📋 Table of Contents](#-table-of-contents)
-  - [✨ Features](#-features)
-  - [🏗️ Architecture](#️-architecture)
-  - [🛠️ Technology Stack](#️-technology-stack)
-  - [📁 Project Structure](#-project-structure)
-  - [🚀 Quick Start](#-quick-start)
-  - [📖 API Documentation](#-api-documentation)
-  - [🎨 User Interface](#-user-interface)
-  - [🗄️ Database Schema](#️-database-schema)
-  - [🔧 Development](#-development)
-  - [🚀 Deployment](#-deployment)
-  - [🧪 Testing](#-testing)
-  - [🤝 Contributing](#-contributing)
-  - [📝 Changelog](#-changelog)
-  - [📄 License](#-license)
-  - [🙏 Acknowledgments](#-acknowledgments)
+  - [📋 Tabla de Contenidos](#-tabla-de-contenidos)
+  - [✨ Características](#-características)
+  - [🏗️ Arquitectura](#️-arquitectura)
+  - [🛠️ Tecnologías Utilizadas](#️-tecnologías-utilizadas)
+  - [📁 Estructura del Proyecto](#-estructura-del-proyecto)
+  - [🚀 Inicio Rápido](#-inicio-rápido)
+  - [📖 Documentación de la API](#-documentación-de-la-api)
+  - [🎨 Interfaz de Usuario](#-interfaz-de-usuario)
+  - [🗄️ Esquema de Base de Datos](#️-esquema-de-base-de-datos)
+  - [🔧 Desarrollo](#-desarrollo)
+  - [🚀 Despliegue](#-despliegue)
+  - [🧪 Pruebas](#-pruebas)
+  - [🤝 Contribución](#-contribución)
+  - [📝 Registro de Cambios](#-registro-de-cambios)
+  - [📄 Licencia](#-licencia)
+  - [🙏 Agradecimientos](#-agradecimientos)
 
-## ✨ Features
+## ✨ Características
 
 ### 🎯 Funcionalidad Principal
 - **🎭 Gestión de Películas**: Operaciones CRUD completas para películas con categorías
@@ -54,7 +54,7 @@
 - **🔐 Seguridad**: Manejo seguro de datos y prevención de inyección SQL
 - **⚡ Rendimiento**: Consultas optimizadas y almacenamiento en caché
 
-## 🏗️ Architecture
+## 🏗️ Arquitectura
 
 ```mermaid
 graph TB
@@ -94,7 +94,7 @@ graph TB
 - **🧪 Capacidad de Prueba**: Soporte para pruebas unitarias e integración
 - **📈 Escalabilidad**: Escalado horizontal y vertical
 
-## 🛠️ Technology Stack
+## 🛠️ Tecnologías Utilizadas
 
 ### Backend
 - **Node.js** - Entorno de ejecución
@@ -113,7 +113,7 @@ graph TB
 - **Git** - Control de versiones
 - **VS Code** - IDE con extensiones
 
-## 📁 Project Structure
+## 📁 Estructura del Proyecto
 
 ```
 proyecto-cine-glorimar/
@@ -148,7 +148,7 @@ proyecto-cine-glorimar/
 └── 📄 README.md           # 📖 Documentation
 ```
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
 ### Prerrequisitos
 - **Node.js** 18+ ([Descargar](https://nodejs.org/))
@@ -188,7 +188,7 @@ proyecto-cine-glorimar/
    - Interfaz Web: http://localhost:3002
    - URL Base de API: http://localhost:3002/api
 
-## 📖 API Documentation
+## 📖 Documentación de la API
 
 ### 🎭 API de Películas
 
@@ -259,7 +259,7 @@ proyecto-cine-glorimar/
 }
 ```
 
-## 🎨 User Interface
+## 🎨 Interfaz de Usuario
 
 ### Dashboard
 - **📊 Tarjetas de Estadísticas**: Métricas y KPIs en tiempo real
@@ -278,7 +278,7 @@ proyecto-cine-glorimar/
 - **🔍 Filtrado Avanzado**: Búsqueda por fecha, producto, cantidad
 - **📊 Análisis**: Tendencias de pedidos y estadísticas
 
-## 🗄️ Database Schema
+## 🗄️ Esquema de Base de Datos
 
 ```sql
 -- Core Entities
@@ -313,7 +313,7 @@ erDiagram
     FUNCIONES ||--o{ TICKETS : for
 ```
 
-## 🔧 Development
+## 🔧 Desarrollo
 
 ### Configuración de Desarrollo
 
@@ -361,7 +361,7 @@ npm run test:coverage
 npm run test:integration
 ```
 
-## 🚀 Deployment
+## 🚀 Despliegue
 
 ### Despliegue en Producción
 
@@ -400,7 +400,7 @@ CMD ["npm", "start"]
 - **Almacenamiento**: 500MB para aplicación y logs
 - **Base de Datos**: MariaDB 10.4+ o MySQL 8.0+
 
-## 🧪 Testing
+## 🧪 Pruebas
 
 ### Pruebas Manuales
 
@@ -470,22 +470,22 @@ npm run test:e2e
 - ✅ Enrutamiento Express y middleware
 - ✅ Integración de plantillas EJS
 
-## 📄 License
+## 📄 Licencia
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Este proyecto está licenciado bajo la Licencia MIT - consulte el archivo [LICENSE](LICENSE) para más detalles.
 
-## 🙏 Acknowledgments
+## 🙏 Agradecimientos
 
-- **Glorimar**: Project architecture and initial implementation
-- **Development Team**: For contributions and feedback
-- **Open Source Community**: For the amazing tools and libraries
+- **Glorimar**: Arquitectura del proyecto e implementación inicial
+- **Equipo de Desarrollo**: Por contribuciones y retroalimentación
+- **Comunidad Open Source**: Por las increíbles herramientas y bibliotecas
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for cinema management excellence**
+**Hecho con ❤️ para la excelencia en gestión cinematográfica**
 
-[⬆️ Back to Top](#-cine-glorimar---cinema-management-system)
+[⬆️ Volver al Inicio](#-sistema-de-gestión-de-cines---cine-glorimar)
 
 </div>
