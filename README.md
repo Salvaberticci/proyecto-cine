@@ -1,4 +1,4 @@
-# 🎬 Cine Glorimar - Cinema Management System
+# 🎬 Sistema de Gestión de Cines - Cine Glorimar
 
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-4.18+-blue.svg)](https://expressjs.com/)
@@ -6,11 +6,11 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> A comprehensive cinema management system built with Node.js, Express, and MariaDB, featuring modern web interfaces and RESTful APIs for complete cinema operations management.
+> Un sistema completo de gestión de cines construido con Node.js, Express y MariaDB, con interfaces web modernas y APIs RESTful para la gestión completa de operaciones cinematográficas.
 
 ## 📋 Table of Contents
 
-- [🎬 Cine Glorimar - Cinema Management System](#-cine-glorimar---cinema-management-system)
+- [🎬 Sistema de Gestión de Cines - Cine Glorimar](#-sistema-de-gestión-de-cines---cine-glorimar)
   - [📋 Table of Contents](#-table-of-contents)
   - [✨ Features](#-features)
   - [🏗️ Architecture](#️-architecture)
@@ -30,29 +30,29 @@
 
 ## ✨ Features
 
-### 🎯 Core Functionality
-- **🎭 Movie Management**: Complete CRUD operations for movies with categories
-- **🎪 Showtime Management**: Schedule and manage movie screenings
-- **🏢 Theater Management**: Handle multiple screening rooms with capacity tracking
-- **💳 Payment Methods**: Support for various payment options
-- **📦 Product Management**: Manage concession stand inventory
-- **🛒 Order Management**: Process customer orders and track sales
-- **📊 Sales Analytics**: Comprehensive reporting and analytics
+### 🎯 Funcionalidad Principal
+- **🎭 Gestión de Películas**: Operaciones CRUD completas para películas con categorías
+- **🎪 Gestión de Funciones**: Programación y gestión de proyecciones de películas
+- **🏢 Gestión de Salas**: Manejo de múltiples salas de proyección con control de capacidad
+- **💳 Métodos de Pago**: Soporte para diversas opciones de pago
+- **📦 Gestión de Productos**: Inventario de productos de confitería
+- **🛒 Gestión de Pedidos**: Procesamiento de pedidos de clientes y seguimiento de ventas
+- **📊 Análisis de Ventas**: Reportes y análisis completos
 
-### 🎨 User Experience
-- **🌐 Modern Web Interface**: Responsive design with EJS templates
-- **📱 Mobile-First**: Optimized for all device sizes
-- **🎭 Intuitive UI**: User-friendly dashboards and forms
-- **⚡ Real-time Updates**: Dynamic content loading and updates
-- **🔍 Advanced Search**: Filter and search across all entities
+### 🎨 Experiencia de Usuario
+- **🌐 Interfaz Web Moderna**: Diseño responsivo con plantillas EJS
+- **📱 Mobile-First**: Optimizado para todos los tamaños de dispositivo
+- **🎭 UI Intuitiva**: Dashboards y formularios amigables para el usuario
+- **⚡ Actualizaciones en Tiempo Real**: Carga dinámica de contenido y actualizaciones
+- **🔍 Búsqueda Avanzada**: Filtrado y búsqueda en todas las entidades
 
-### 🔧 Technical Features
-- **🏛️ MVC Architecture**: Clean separation of concerns
-- **🔄 RESTful APIs**: Comprehensive API endpoints
-- **🛡️ Error Handling**: Robust error management and validation
-- **📝 Input Validation**: Client and server-side validation
-- **🔐 Security**: Secure data handling and SQL injection prevention
-- **⚡ Performance**: Optimized queries and caching
+### 🔧 Características Técnicas
+- **🏛️ Arquitectura MVC**: Separación clara de responsabilidades
+- **🔄 APIs RESTful**: Endpoints de API completos
+- **🛡️ Manejo de Errores**: Gestión robusta de errores y validación
+- **📝 Validación de Entrada**: Validación del lado cliente y servidor
+- **🔐 Seguridad**: Manejo seguro de datos y prevención de inyección SQL
+- **⚡ Rendimiento**: Consultas optimizadas y almacenamiento en caché
 
 ## 🏗️ Architecture
 
@@ -87,31 +87,31 @@ graph TB
     E --> L
 ```
 
-### Architectural Principles
-- **🎯 Separation of Concerns**: Clear division between routes, controllers, and services
-- **📦 Modular Design**: Reusable components and services
-- **🔄 Dependency Injection**: Loose coupling between components
-- **🧪 Testability**: Unit and integration testing support
-- **📈 Scalability**: Horizontal and vertical scaling capabilities
+### Principios Arquitectónicos
+- **🎯 Separación de Responsabilidades**: División clara entre rutas, controladores y servicios
+- **📦 Diseño Modular**: Componentes y servicios reutilizables
+- **🔄 Inyección de Dependencias**: Acoplamiento bajo entre componentes
+- **🧪 Capacidad de Prueba**: Soporte para pruebas unitarias e integración
+- **📈 Escalabilidad**: Escalado horizontal y vertical
 
 ## 🛠️ Technology Stack
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MariaDB** - Relational database
-- **EJS** - Template engine
+- **Node.js** - Entorno de ejecución
+- **Express.js** - Framework web
+- **MariaDB** - Base de datos relacional
+- **EJS** - Motor de plantillas
 
 ### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with gradients and animations
-- **JavaScript (ES6+)** - Interactive functionality
-- **Font Awesome** - Icon library
+- **HTML5** - Marcado semántico
+- **CSS3** - Estilos modernos con gradientes y animaciones
+- **JavaScript (ES6+)** - Funcionalidad interactiva
+- **Font Awesome** - Biblioteca de iconos
 
-### Development Tools
-- **Nodemon** - Development server with auto-reload
-- **Git** - Version control
-- **VS Code** - IDE with extensions
+### Herramientas de Desarrollo
+- **Nodemon** - Servidor de desarrollo con recarga automática
+- **Git** - Control de versiones
+- **VS Code** - IDE con extensiones
 
 ## 📁 Project Structure
 
@@ -150,57 +150,57 @@ proyecto-cine-glorimar/
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- **Node.js** 18+ ([Download](https://nodejs.org/))
-- **XAMPP** with MariaDB/MySQL ([Download](https://www.apachefriends.org/))
-- **Git** for version control ([Download](https://git-scm.com/))
+### Prerrequisitos
+- **Node.js** 18+ ([Descargar](https://nodejs.org/))
+- **XAMPP** con MariaDB/MySQL ([Descargar](https://www.apachefriends.org/))
+- **Git** para control de versiones ([Descargar](https://git-scm.com/))
 
-### Installation
+### Instalación
 
-1. **Clone the repository**
+1. **Clonar el repositorio**
    ```bash
-   git clone https://github.com/your-username/proyecto-cine-glorimar.git
+   git clone https://github.com/Salvaberticci/proyecto-cine.git
    cd proyecto-cine-glorimar
    ```
 
-2. **Install dependencies**
+2. **Instalar dependencias**
    ```bash
    npm install
    ```
 
-3. **Setup database**
+3. **Configurar base de datos**
    ```bash
-   # Start XAMPP and MySQL service
-   # Import database schema
+   # Iniciar XAMPP y el servicio MySQL
+   # Importar esquema de base de datos
    mysql -u root < cine.sql
    ```
 
-4. **Start the application**
+4. **Iniciar la aplicación**
    ```bash
-   # Development mode
+   # Modo desarrollo
    npm run dev
 
-   # Production mode
+   # Modo producción
    npm start
    ```
 
-5. **Access the application**
-   - Web Interface: http://localhost:3002
-   - API Base URL: http://localhost:3002/api
+5. **Acceder a la aplicación**
+   - Interfaz Web: http://localhost:3002
+   - URL Base de API: http://localhost:3002/api
 
 ## 📖 API Documentation
 
-### 🎭 Movies API
+### 🎭 API de Películas
 
-| Method | Endpoint | Description | Response |
-|--------|----------|-------------|----------|
-| `GET` | `/api/peliculas` | List all movies | `200` - Array of movies |
-| `GET` | `/api/peliculas/:id` | Get movie by ID | `200` - Movie object |
-| `POST` | `/api/peliculas` | Create new movie | `201` - Created movie |
-| `PUT` | `/api/peliculas/:id` | Update movie | `200` - Updated movie |
-| `DELETE` | `/api/peliculas/:id` | Delete movie | `200` - Success message |
+| Método | Endpoint | Descripción | Respuesta |
+|--------|----------|-------------|-----------|
+| `GET` | `/api/peliculas` | Listar todas las películas | `200` - Array de películas |
+| `GET` | `/api/peliculas/:id` | Obtener película por ID | `200` - Objeto película |
+| `POST` | `/api/peliculas` | Crear nueva película | `201` - Película creada |
+| `PUT` | `/api/peliculas/:id` | Actualizar película | `200` - Película actualizada |
+| `DELETE` | `/api/peliculas/:id` | Eliminar película | `200` - Mensaje de éxito |
 
-**Movie Schema:**
+**Esquema de Película:**
 ```json
 {
   "id_pelicula": "number",
@@ -211,72 +211,72 @@ proyecto-cine-glorimar/
 }
 ```
 
-### 🎪 Showtimes API
+### 🎪 API de Funciones
 
-| Method | Endpoint | Description | Response |
-|--------|----------|-------------|----------|
-| `GET` | `/api/funciones` | List all showtimes | `200` - Array of showtimes |
-| `GET` | `/api/funciones/:id` | Get showtime by ID | `200` - Showtime object |
-| `POST` | `/api/funciones` | Create new showtime | `201` - Created showtime |
-| `PUT` | `/api/funciones/:id` | Update showtime | `200` - Updated showtime |
-| `DELETE` | `/api/funciones/:id` | Delete showtime | `200` - Success message |
+| Método | Endpoint | Descripción | Respuesta |
+|--------|----------|-------------|-----------|
+| `GET` | `/api/funciones` | Listar todas las funciones | `200` - Array de funciones |
+| `GET` | `/api/funciones/:id` | Obtener función por ID | `200` - Objeto función |
+| `POST` | `/api/funciones` | Crear nueva función | `201` - Función creada |
+| `PUT` | `/api/funciones/:id` | Actualizar función | `200` - Función actualizada |
+| `DELETE` | `/api/funciones/:id` | Eliminar función | `200` - Mensaje de éxito |
 
-### 📦 Products API
+### 📦 API de Productos
 
-| Method | Endpoint | Description | Response |
-|--------|----------|-------------|----------|
-| `GET` | `/api/productos` | List all products | `200` - Array of products |
-| `GET` | `/api/productos/:id` | Get product by ID | `200` - Product object |
-| `POST` | `/api/productos` | Create new product | `201` - Created product |
-| `PUT` | `/api/productos/:id` | Update product | `200` - Updated product |
-| `DELETE` | `/api/productos/:id` | Delete product | `200` - Success message |
+| Método | Endpoint | Descripción | Respuesta |
+|--------|----------|-------------|-----------|
+| `GET` | `/api/productos` | Listar todos los productos | `200` - Array de productos |
+| `GET` | `/api/productos/:id` | Obtener producto por ID | `200` - Objeto producto |
+| `POST` | `/api/productos` | Crear nuevo producto | `201` - Producto creado |
+| `PUT` | `/api/productos/:id` | Actualizar producto | `200` - Producto actualizado |
+| `DELETE` | `/api/productos/:id` | Eliminar producto | `200` - Mensaje de éxito |
 
-### 🛒 Orders API
+### 🛒 API de Pedidos
 
-| Method | Endpoint | Description | Response |
-|--------|----------|-------------|----------|
-| `GET` | `/api/pedidos/ultimos` | Get last 5 orders | `200` - Array of orders |
-| `GET` | `/api/pedidos` | List all orders | `200` - Array of orders |
-| `POST` | `/api/pedidos` | Create new order | `201` - Created order |
+| Método | Endpoint | Descripción | Respuesta |
+|--------|----------|-------------|-----------|
+| `GET` | `/api/pedidos/ultimos` | Obtener últimos 5 pedidos | `200` - Array de pedidos |
+| `GET` | `/api/pedidos` | Listar todos los pedidos | `200` - Array de pedidos |
+| `POST` | `/api/pedidos` | Crear nuevo pedido | `201` - Pedido creado |
 
-### API Response Format
+### Formato de Respuesta de la API
 
-**Success Response:**
+**Respuesta Exitosa:**
 ```json
 {
   "success": true,
   "data": { ... },
-  "message": "Operation completed successfully"
+  "message": "Operación completada exitosamente"
 }
 ```
 
-**Error Response:**
+**Respuesta de Error:**
 ```json
 {
   "success": false,
-  "message": "Error description",
-  "error": "Detailed error information"
+  "message": "Descripción del error",
+  "error": "Información detallada del error"
 }
 ```
 
 ## 🎨 User Interface
 
 ### Dashboard
-- **📊 Statistics Cards**: Real-time metrics and KPIs
-- **🎯 Quick Actions**: Direct access to common operations
-- **📱 Responsive Design**: Optimized for desktop and mobile
-- **🎨 Modern UI**: Gradient backgrounds and smooth animations
+- **📊 Tarjetas de Estadísticas**: Métricas y KPIs en tiempo real
+- **🎯 Acciones Rápidas**: Acceso directo a operaciones comunes
+- **📱 Diseño Responsivo**: Optimizado para escritorio y móvil
+- **🎨 UI Moderna**: Fondos con gradientes y animaciones suaves
 
-### Product Management
-- **📋 Product List**: Sortable table with search functionality
-- **➕ Create Product**: Intuitive form with validation
-- **✏️ Edit Product**: Pre-populated forms with change detection
-- **📊 Stock Alerts**: Visual indicators for low inventory
+### Gestión de Productos
+- **📋 Lista de Productos**: Tabla ordenable con funcionalidad de búsqueda
+- **➕ Crear Producto**: Formulario intuitivo con validación
+- **✏️ Editar Producto**: Formularios precargados con detección de cambios
+- **📊 Alertas de Stock**: Indicadores visuales para inventario bajo
 
-### Order Management
-- **📈 Order History**: Complete transaction log
-- **🔍 Advanced Filtering**: Search by date, product, quantity
-- **📊 Analytics**: Order trends and statistics
+### Gestión de Pedidos
+- **📈 Historial de Pedidos**: Registro completo de transacciones
+- **🔍 Filtrado Avanzado**: Búsqueda por fecha, producto, cantidad
+- **📊 Análisis**: Tendencias de pedidos y estadísticas
 
 ## 🗄️ Database Schema
 
@@ -315,73 +315,73 @@ erDiagram
 
 ## 🔧 Development
 
-### Development Setup
+### Configuración de Desarrollo
 
-1. **Clone and install**
+1. **Clonar e instalar**
    ```bash
-   git clone https://github.com/your-username/proyecto-cine-glorimar.git
+   git clone https://github.com/Salvaberticci/proyecto-cine.git
    cd proyecto-cine-glorimar
    npm install
    ```
 
-2. **Environment configuration**
+2. **Configuración de entorno**
    ```bash
-   # Create .env file
+   # Crear archivo .env
    cp .env.example .env
-   # Edit .env with your database credentials
+   # Editar .env con sus credenciales de base de datos
    ```
 
-3. **Database setup**
+3. **Configuración de base de datos**
    ```bash
    mysql -u root -p < cine.sql
    ```
 
-4. **Start development server**
+4. **Iniciar servidor de desarrollo**
    ```bash
    npm run dev
    ```
 
-### Code Quality
+### Calidad de Código
 
-- **ESLint**: JavaScript linting
-- **Prettier**: Code formatting
-- **Husky**: Git hooks for quality checks
-- **Jest**: Unit testing framework
+- **ESLint**: Linting de JavaScript
+- **Prettier**: Formateo de código
+- **Husky**: Hooks de Git para control de calidad
+- **Jest**: Framework de pruebas unitarias
 
-### Testing
+### Pruebas
 
 ```bash
-# Run all tests
+# Ejecutar todas las pruebas
 npm test
 
-# Run tests with coverage
+# Ejecutar pruebas con cobertura
 npm run test:coverage
 
-# Run integration tests
+# Ejecutar pruebas de integración
 npm run test:integration
 ```
 
 ## 🚀 Deployment
 
-### Production Deployment
+### Despliegue en Producción
 
-1. **Environment setup**
+1. **Configuración de entorno**
    ```bash
    export NODE_ENV=production
    export PORT=3002
    ```
 
-2. **Database configuration**
-   - Update connection strings for production database
-   - Ensure database backups are configured
+2. **Configuración de base de datos**
+   - Actualizar cadenas de conexión para base de datos de producción
+   - Asegurar que las copias de seguridad de base de datos estén configuradas
 
-3. **Build and deploy**
+3. **Construir y desplegar**
    ```bash
    npm run build
    npm start
    ```
 
-### Docker Deployment
+### Despliegue con Docker
 
 ```dockerfile
 FROM node:18-alpine
@@ -393,82 +393,82 @@ EXPOSE 3002
 CMD ["npm", "start"]
 ```
 
-### Server Requirements
+### Requisitos del Servidor
 
-- **Node.js**: 18.0 or higher
-- **RAM**: Minimum 512MB, Recommended 1GB
-- **Storage**: 500MB for application and logs
-- **Database**: MariaDB 10.4+ or MySQL 8.0+
+- **Node.js**: 18.0 o superior
+- **RAM**: Mínimo 512MB, Recomendado 1GB
+- **Almacenamiento**: 500MB para aplicación y logs
+- **Base de Datos**: MariaDB 10.4+ o MySQL 8.0+
 
 ## 🧪 Testing
 
-### Manual Testing
+### Pruebas Manuales
 
-1. **API Testing with cURL**
+1. **Pruebas de API con cURL**
    ```bash
-   # Test movie listing
+   # Probar listado de películas
    curl http://localhost:3002/api/peliculas
 
-   # Test product creation
+   # Probar creación de producto
    curl -X POST http://localhost:3002/api/productos \
      -H "Content-Type: application/json" \
-     -d '{"nombre":"Test Product","precio":10.99,"stock":50}'
+     -d '{"nombre":"Producto de Prueba","precio":10.99,"stock":50}'
    ```
 
-2. **Browser Testing**
-   - Access http://localhost:3002
-   - Test all CRUD operations
-   - Verify responsive design
+2. **Pruebas en Navegador**
+   - Acceder a http://localhost:3002
+   - Probar todas las operaciones CRUD
+   - Verificar diseño responsivo
 
-### Automated Testing
+### Pruebas Automatizadas
 
 ```bash
-# Unit tests
+# Pruebas unitarias
 npm run test:unit
 
-# Integration tests
+# Pruebas de integración
 npm run test:integration
 
-# End-to-end tests
+# Pruebas de extremo a extremo
 npm run test:e2e
 ```
 
-## 🤝 Contributing
+## 🤝 Contribución
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+¡Aceptamos contribuciones! Por favor consulte nuestra [Guía de Contribución](CONTRIBUTING.md) para más detalles.
 
-### Development Workflow
+### Flujo de Desarrollo
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+1. **Hacer fork** del repositorio
+2. **Crear** una rama de característica (`git checkout -b feature/caracteristica-increible`)
+3. **Realizar** cambios (`git commit -m 'Agregar característica increíble'`)
+4. **Subir** a la rama (`git push origin feature/caracteristica-increible`)
+5. **Abrir** una Pull Request
 
-### Code Standards
+### Estándares de Código
 
-- **JavaScript**: ES6+ syntax, async/await preferred
-- **CSS**: BEM methodology, CSS Grid and Flexbox
-- **HTML**: Semantic markup, accessibility compliant
-- **SQL**: Prepared statements, indexed queries
+- **JavaScript**: Sintaxis ES6+, async/await preferido
+- **CSS**: Metodología BEM, CSS Grid y Flexbox
+- **HTML**: Marcado semántico, accesibilidad cumplida
+- **SQL**: Sentencias preparadas, consultas indexadas
 
-## 📝 Changelog
+## 📝 Registro de Cambios
 
 ### [v1.0.0] - 2025-01-XX
-- ✅ Initial release with complete cinema management system
-- ✅ MVC architecture implementation
-- ✅ RESTful API endpoints
-- ✅ Modern web interface with EJS templates
-- ✅ MariaDB integration with full schema
-- ✅ Product and order management modules
-- ✅ Responsive design and mobile optimization
+- ✅ Versión inicial con sistema completo de gestión de cines
+- ✅ Implementación de arquitectura MVC
+- ✅ Endpoints de API RESTful
+- ✅ Interfaz web moderna con plantillas EJS
+- ✅ Integración MariaDB con esquema completo
+- ✅ Módulos de gestión de productos y pedidos
+- ✅ Diseño responsivo y optimización móvil
 
 ### [v0.9.0] - 2024-12-XX
-- 🔄 Beta release with core functionality
-- ✅ Basic CRUD operations for all entities
-- ✅ Database schema and relationships
-- ✅ Express routing and middleware
-- ✅ EJS template integration
+- 🔄 Versión beta con funcionalidad principal
+- ✅ Operaciones CRUD básicas para todas las entidades
+- ✅ Esquema de base de datos y relaciones
+- ✅ Enrutamiento Express y middleware
+- ✅ Integración de plantillas EJS
 
 ## 📄 License
 
