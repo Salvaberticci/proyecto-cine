@@ -60,7 +60,11 @@ class DBService {
   async getAllProductos() {
     try {
       const [rows] = await this.connection.execute('SELECT * FROM productos ORDER BY id DESC');
-      return rows;
+      // Convertir precio a número para compatibilidad con vistas EJS
+      return rows.map(producto => ({
+        ...producto,
+        precio: parseFloat(producto.precio)
+      }));
     } catch (error) {
       throw new Error('Error al obtener productos: ' + error.message);
     }
@@ -78,7 +82,11 @@ class DBService {
         throw new Error('Producto no encontrado');
       }
 
-      return rows[0];
+      // Convertir precio a número para compatibilidad con vistas EJS
+      return {
+        ...rows[0],
+        precio: parseFloat(rows[0].precio)
+      };
     } catch (error) {
       if (error.message.includes('Producto no encontrado')) {
         throw error;
@@ -113,7 +121,10 @@ class DBService {
         [parseInt(id)]
       );
 
-      return rows[0];
+      return {
+        ...rows[0],
+        precio: parseFloat(rows[0].precio)
+      };
     } catch (error) {
       if (error.message.includes('Producto no encontrado')) {
         throw error;
@@ -138,7 +149,10 @@ class DBService {
       // Eliminar el producto
       await this.connection.execute('DELETE FROM productos WHERE id = ?', [parseInt(id)]);
 
-      return rows[0];
+      return {
+        ...rows[0],
+        precio: parseFloat(rows[0].precio)
+      };
     } catch (error) {
       if (error.message.includes('Producto no encontrado')) {
         throw error;
