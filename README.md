@@ -99,12 +99,15 @@ graph TB
 ### Backend
 - **Node.js** - Entorno de ejecución
 - **Express.js** - Framework web
-- **MariaDB** - Base de datos relacional
+- **MariaDB/MySQL** - Base de datos relacional
+- **mysql2** - Cliente de base de datos con Promises
+- **dotenv** - Gestión de variables de entorno
 - **EJS** - Motor de plantillas
 
 ### Frontend
 - **HTML5** - Marcado semántico
 - **CSS3** - Estilos modernos con gradientes y animaciones
+- **Bootstrap 5** - Framework CSS responsivo
 - **JavaScript (ES6+)** - Funcionalidad interactiva
 - **Font Awesome** - Biblioteca de iconos
 
@@ -112,6 +115,7 @@ graph TB
 - **Nodemon** - Servidor de desarrollo con recarga automática
 - **Git** - Control de versiones
 - **VS Code** - IDE con extensiones
+- **XAMPP** - Servidor local con MariaDB
 
 ## 📁 Estructura del Proyecto
 
@@ -133,18 +137,44 @@ proyecto-cine-glorimar/
 │   └── pedidos.js
 ├── 📂 views/                # 🎨 EJS templates
 │   ├── index.ejs
+│   ├── error.ejs
+│   ├── 📂 peliculas/
+│   │   ├── listar.ejs
+│   │   ├── crear.ejs
+│   │   └── editar.ejs
+│   ├── 📂 funciones/
+│   │   ├── listar.ejs
+│   │   ├── crear.ejs
+│   │   └── editar.ejs
+│   ├── 📂 salas/
+│   │   ├── listar.ejs
+│   │   ├── crear.ejs
+│   │   └── editar.ejs
+│   ├── 📂 metodospago/
+│   │   ├── listar.ejs
+│   │   ├── crear.ejs
+│   │   └── editar.ejs
 │   ├── 📂 productos/
 │   │   ├── listar.ejs
 │   │   ├── crear.ejs
 │   │   └── editar.ejs
 │   └── 📂 pedidos/
-│       └── listar.ejs
+│       ├── listar.ejs
+│       └── crear.ejs
 ├── 📂 database/            # 🗄️ Database services
 │   └── DBService.js
-├── 📂 public/              # 📁 Static assets (future)
+├── 📂 docs/                # 📚 Documentation
+│   ├── DATABASE_SCHEMA.md
+│   ├── SCREENSHOTS.md
+│   └── TROUBLESHOOTING.md
+├── 📄 .env                 # 🔐 Environment configuration
+├── 📄 .gitignore           # 🚫 Git ignore rules
 ├── 📄 app.js               # 🚀 Main application file
 ├── 📄 package.json         # 📦 Dependencies and scripts
 ├── 📄 cine.sql            # 🗄️ Database schema
+├── 📄 CHANGELOG.md         # 📝 Change log
+├── 📄 CONTRIBUTING.md      # 🤝 Contribution guidelines
+├── 📄 LICENSE              # 📄 MIT License
 └── 📄 README.md           # 📖 Documentation
 ```
 
@@ -154,6 +184,7 @@ proyecto-cine-glorimar/
 - **Node.js** 18+ ([Descargar](https://nodejs.org/))
 - **XAMPP** con MariaDB/MySQL ([Descargar](https://www.apachefriends.org/))
 - **Git** para control de versiones ([Descargar](https://git-scm.com/))
+- **Navegador web** moderno (Chrome, Firefox, Edge)
 
 ### Instalación
 
@@ -169,11 +200,20 @@ proyecto-cine-glorimar/
    ```
 
 3. **Configurar base de datos**
-   ```bash
-   # Iniciar XAMPP y el servicio MySQL
-   # Importar esquema de base de datos
-   mysql -u root < cine.sql
-   ```
+    ```bash
+    # Iniciar XAMPP y el servicio MySQL/MariaDB
+    # Crear base de datos 'cine'
+    mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS cine;"
+
+    # Importar esquema de base de datos
+    mysql -u root -p cine < cine.sql
+    ```
+
+4. **Configurar variables de entorno**
+    ```bash
+    # El archivo .env ya está configurado con valores por defecto
+    # Si necesitas cambiar las credenciales de BD, edita el archivo .env
+    ```
 
 4. **Iniciar la aplicación**
    ```bash
@@ -185,8 +225,17 @@ proyecto-cine-glorimar/
    ```
 
 5. **Acceder a la aplicación**
-   - Interfaz Web: http://localhost:3002
-   - URL Base de API: http://localhost:3002/api
+    - **Interfaz Web Principal**: http://localhost:3002
+    - **URL Base de API**: http://localhost:3002/api
+    - **Documentación API**: Ver sección "📖 Documentación de la API" abajo
+
+### URLs de Acceso Directo
+- **Películas**: http://localhost:3002/peliculas
+- **Funciones**: http://localhost:3002/funciones
+- **Salas**: http://localhost:3002/salas
+- **Métodos de Pago**: http://localhost:3002/metodospago
+- **Productos**: http://localhost:3002/productos
+- **Pedidos**: http://localhost:3002/pedidos
 
 ## 📖 Documentación de la API
 
@@ -206,8 +255,7 @@ proyecto-cine-glorimar/
   "id_pelicula": "number",
   "titulo": "string",
   "anio": "number",
-  "duracion": "number",
-  "categorias": ["string"]
+  "duracion": "number"
 }
 ```
 
@@ -221,6 +269,53 @@ proyecto-cine-glorimar/
 | `PUT` | `/api/funciones/:id` | Actualizar función | `200` - Función actualizada |
 | `DELETE` | `/api/funciones/:id` | Eliminar función | `200` - Mensaje de éxito |
 
+**Esquema de Función:**
+```json
+{
+  "id_funcion": "number",
+  "id_pelicula": "number",
+  "id_sala": "number",
+  "fecha_hora": "datetime"
+}
+```
+
+### 🏢 API de Salas
+
+| Método | Endpoint | Descripción | Respuesta |
+|--------|----------|-------------|-----------|
+| `GET` | `/api/salas` | Listar todas las salas | `200` - Array de salas |
+| `GET` | `/api/salas/:id` | Obtener sala por ID | `200` - Objeto sala |
+| `POST` | `/api/salas` | Crear nueva sala | `201` - Sala creada |
+| `PUT` | `/api/salas/:id` | Actualizar sala | `200` - Sala actualizada |
+| `DELETE` | `/api/salas/:id` | Eliminar sala | `200` - Mensaje de éxito |
+
+**Esquema de Sala:**
+```json
+{
+  "id_sala": "number",
+  "nombre": "string",
+  "capacidad": "number"
+}
+```
+
+### 💳 API de Métodos de Pago
+
+| Método | Endpoint | Descripción | Respuesta |
+|--------|----------|-------------|-----------|
+| `GET` | `/api/metodospago` | Listar todos los métodos de pago | `200` - Array de métodos |
+| `GET` | `/api/metodospago/:id` | Obtener método por ID | `200` - Objeto método |
+| `POST` | `/api/metodospago` | Crear nuevo método | `201` - Método creado |
+| `PUT` | `/api/metodospago/:id` | Actualizar método | `200` - Método actualizado |
+| `DELETE` | `/api/metodospago/:id` | Eliminar método | `200` - Mensaje de éxito |
+
+**Esquema de Método de Pago:**
+```json
+{
+  "id_metodo": "number",
+  "nombre": "string"
+}
+```
+
 ### 📦 API de Productos
 
 | Método | Endpoint | Descripción | Respuesta |
@@ -231,13 +326,28 @@ proyecto-cine-glorimar/
 | `PUT` | `/api/productos/:id` | Actualizar producto | `200` - Producto actualizado |
 | `DELETE` | `/api/productos/:id` | Eliminar producto | `200` - Mensaje de éxito |
 
+**Esquema de Producto:**
+```json
+{
+  "id": "number",
+  "nombre": "string",
+  "descripcion": "string",
+  "precio": "number",
+  "stock": "number",
+  "fecha_creacion": "date"
+}
+```
+
 ### 🛒 API de Pedidos
 
 | Método | Endpoint | Descripción | Respuesta |
 |--------|----------|-------------|-----------|
 | `GET` | `/api/pedidos/ultimos` | Obtener últimos 5 pedidos | `200` - Array de pedidos |
 | `GET` | `/api/pedidos` | Listar todos los pedidos | `200` - Array de pedidos |
+| `GET` | `/api/pedidos/:id` | Obtener pedido por ID | `200` - Objeto pedido |
 | `POST` | `/api/pedidos` | Crear nuevo pedido | `201` - Pedido creado |
+| `PUT` | `/api/pedidos/:id` | Actualizar pedido | `200` - Pedido actualizado |
+| `DELETE` | `/api/pedidos/:pedidoId/producto/:productoId` | Eliminar relación pedido-producto | `200` - Mensaje de éxito |
 
 ### Formato de Respuesta de la API
 
@@ -261,22 +371,48 @@ proyecto-cine-glorimar/
 
 ## 🎨 Interfaz de Usuario
 
-### Dashboard
+### Dashboard Principal
+- **🏠 Página de Inicio**: Navegación centralizada a todas las secciones
 - **📊 Tarjetas de Estadísticas**: Métricas y KPIs en tiempo real
 - **🎯 Acciones Rápidas**: Acceso directo a operaciones comunes
 - **📱 Diseño Responsivo**: Optimizado para escritorio y móvil
 - **🎨 UI Moderna**: Fondos con gradientes y animaciones suaves
 
+### Gestión de Películas
+- **🎬 Lista de Películas**: Tabla completa con información detallada
+- **➕ Agregar Película**: Formulario para nuevas películas
+- **✏️ Editar Película**: Formularios precargados con validación
+- **🗑️ Eliminar Película**: Confirmación modal para seguridad
+
+### Gestión de Funciones
+- **🎪 Lista de Funciones**: Muestra funciones con películas y salas relacionadas
+- **📅 Programar Función**: Formulario con dropdowns dinámicos
+- **📝 Editar Función**: Modificación de horarios y asignaciones
+- **🎯 Gestión de Horarios**: Control completo de proyecciones
+
+### Gestión de Salas
+- **🏢 Lista de Salas**: Información de capacidad y estado
+- **➕ Crear Sala**: Formulario para nuevas instalaciones
+- **✏️ Configurar Sala**: Modificación de capacidad y nombre
+- **📊 Indicadores Visuales**: Badges para capacidad de cada sala
+
+### Gestión de Métodos de Pago
+- **💳 Lista de Métodos**: Iconos visuales por tipo de pago
+- **➕ Agregar Método**: Formulario con sugerencias interactivas
+- **✏️ Editar Método**: Modificación de opciones de pago
+- **🎨 Clasificación Visual**: Tarjeta, Efectivo, Transferencia
+
 ### Gestión de Productos
-- **📋 Lista de Productos**: Tabla ordenable con funcionalidad de búsqueda
+- **📦 Lista de Productos**: Tabla ordenable con funcionalidad de búsqueda
 - **➕ Crear Producto**: Formulario intuitivo con validación
 - **✏️ Editar Producto**: Formularios precargados con detección de cambios
 - **📊 Alertas de Stock**: Indicadores visuales para inventario bajo
 
 ### Gestión de Pedidos
-- **📈 Historial de Pedidos**: Registro completo de transacciones
+- **🛒 Historial de Pedidos**: Registro completo de transacciones
 - **🔍 Filtrado Avanzado**: Búsqueda por fecha, producto, cantidad
 - **📊 Análisis**: Tendencias de pedidos y estadísticas
+- **🔗 Relaciones**: Gestión de pedidos-productos
 
 ## 🗄️ Esquema de Base de Datos
 
@@ -453,6 +589,15 @@ npm run test:e2e
 - **SQL**: Sentencias preparadas, consultas indexadas
 
 ## 📝 Registro de Cambios
+
+### [v2.0.0] - 2025-10-XX
+- ✅ **Base de datos real**: Migración completa de variables a MySQL/MariaDB
+- ✅ **Interfaces completas**: Vistas EJS para todas las entidades (Películas, Funciones, Salas, MétodosPago)
+- ✅ **Promises/async**: Implementación completa de operaciones asíncronas
+- ✅ **Persistencia de datos**: Almacenamiento permanente en base de datos
+- ✅ **API completa**: 24+ endpoints RESTful con todas las entidades
+- ✅ **UI moderna**: Bootstrap 5 con diseño responsivo y animaciones
+- ✅ **Funcionalidad completa**: CRUD operations para gestión cinematográfica
 
 ### [v1.0.0] - 2025-01-XX
 - ✅ Versión inicial con sistema completo de gestión de cines
