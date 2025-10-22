@@ -85,7 +85,7 @@
                                             <a href="/peliculas/<%= pelicula.id_pelicula %>/editar" class="btn btn-warning btn-sm me-1">
                                                 <i class="fas fa-edit"></i> Editar
                                             </a>
-                                            <button class="btn btn-danger btn-sm" onclick="eliminarPelicula(<%= pelicula.id_pelicula %>, '<%= pelicula.titulo %>')">
+                                            <button class="btn btn-danger btn-sm" data-id="<%= pelicula.id_pelicula %>" data-nombre="<%= pelicula.titulo %>">
                                                 <i class="fas fa-trash"></i> Eliminar
                                             </button>
                                         </td>
@@ -140,6 +140,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Agregar event listeners a todos los botones de eliminar
+        document.addEventListener('DOMContentLoaded', function() {
+            const eliminarButtons = document.querySelectorAll('.btn-danger[data-id]');
+            eliminarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const nombre = this.getAttribute('data-nombre');
+                    eliminarPelicula(id, nombre);
+                });
+            });
+        });
+
         let peliculaIdAEliminar = null;
 
         function eliminarPelicula(id, nombre) {
