@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 04, 2025 at 11:51 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 03-11-2025 a las 01:15:24
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cine`
+-- Base de datos: `cine`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categorias`
+-- Estructura de tabla para la tabla `categorias`
 --
 
 CREATE TABLE `categorias` (
@@ -33,7 +33,7 @@ CREATE TABLE `categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `categorias`
+-- Volcado de datos para la tabla `categorias`
 --
 
 INSERT INTO `categorias` (`id_categoria`, `nombre`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `categorias` (`id_categoria`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `funciones`
+-- Estructura de tabla para la tabla `funciones`
 --
 
 CREATE TABLE `funciones` (
@@ -57,7 +57,7 @@ CREATE TABLE `funciones` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `funciones`
+-- Volcado de datos para la tabla `funciones`
 --
 
 INSERT INTO `funciones` (`id_funcion`, `id_pelicula`, `id_sala`, `fecha_hora`) VALUES
@@ -80,7 +80,7 @@ INSERT INTO `funciones` (`id_funcion`, `id_pelicula`, `id_sala`, `fecha_hora`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `metodos_pago`
+-- Estructura de tabla para la tabla `metodos_pago`
 --
 
 CREATE TABLE `metodos_pago` (
@@ -89,7 +89,7 @@ CREATE TABLE `metodos_pago` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `metodos_pago`
+-- Volcado de datos para la tabla `metodos_pago`
 --
 
 INSERT INTO `metodos_pago` (`id_metodo`, `nombre`) VALUES
@@ -100,7 +100,29 @@ INSERT INTO `metodos_pago` (`id_metodo`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `peliculas`
+-- Estructura de tabla para la tabla `pedidos`
+--
+
+CREATE TABLE `pedidos` (
+  `id` int(11) NOT NULL,
+  `producto_id` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `fecha_pedido` date DEFAULT curdate()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pedidos`
+--
+
+INSERT INTO `pedidos` (`id`, `producto_id`, `cantidad`, `fecha_pedido`) VALUES
+(1, 1, 2, '2025-10-22'),
+(2, 2, 1, '2025-10-22'),
+(3, 3, 3, '2025-10-22');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `peliculas`
 --
 
 CREATE TABLE `peliculas` (
@@ -111,7 +133,7 @@ CREATE TABLE `peliculas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `peliculas`
+-- Volcado de datos para la tabla `peliculas`
 --
 
 INSERT INTO `peliculas` (`id_pelicula`, `titulo`, `anio`, `duracion`) VALUES
@@ -127,7 +149,7 @@ INSERT INTO `peliculas` (`id_pelicula`, `titulo`, `anio`, `duracion`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `peliculas_categorias`
+-- Estructura de tabla para la tabla `peliculas_categorias`
 --
 
 CREATE TABLE `peliculas_categorias` (
@@ -136,7 +158,7 @@ CREATE TABLE `peliculas_categorias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `peliculas_categorias`
+-- Volcado de datos para la tabla `peliculas_categorias`
 --
 
 INSERT INTO `peliculas_categorias` (`id_pelicula`, `id_categoria`) VALUES
@@ -159,7 +181,31 @@ INSERT INTO `peliculas_categorias` (`id_pelicula`, `id_categoria`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `salas`
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `stock` int(11) NOT NULL,
+  `fecha_creacion` date DEFAULT curdate()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `precio`, `stock`, `fecha_creacion`) VALUES
+(1, 'Palomitas Grandes', 'Palomitas de maÝz saladas tama±o grande', 5.50, 100, '2025-10-22'),
+(2, 'Refresco Mediano', 'Bebida gaseosa mediana', 3.00, 150, '2025-10-22'),
+(3, 'Nachos', 'Nachos con queso y jalape±os', 7.00, 80, '2025-10-22');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `salas`
 --
 
 CREATE TABLE `salas` (
@@ -169,7 +215,7 @@ CREATE TABLE `salas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `salas`
+-- Volcado de datos para la tabla `salas`
 --
 
 INSERT INTO `salas` (`id_sala`, `nombre`, `capacidad`) VALUES
@@ -185,7 +231,7 @@ INSERT INTO `salas` (`id_sala`, `nombre`, `capacidad`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tickets`
+-- Estructura de tabla para la tabla `tickets`
 --
 
 CREATE TABLE `tickets` (
@@ -197,7 +243,7 @@ CREATE TABLE `tickets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `tickets`
+-- Volcado de datos para la tabla `tickets`
 --
 
 INSERT INTO `tickets` (`id_ticket`, `id_venta`, `id_funcion`, `asiento`, `precio`) VALUES
@@ -247,7 +293,7 @@ INSERT INTO `tickets` (`id_ticket`, `id_venta`, `id_funcion`, `asiento`, `precio
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ventas`
+-- Estructura de tabla para la tabla `ventas`
 --
 
 CREATE TABLE `ventas` (
@@ -258,7 +304,7 @@ CREATE TABLE `ventas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `ventas`
+-- Volcado de datos para la tabla `ventas`
 --
 
 INSERT INTO `ventas` (`id_venta`, `id_metodo`, `fecha`, `total`) VALUES
@@ -275,17 +321,17 @@ INSERT INTO `ventas` (`id_venta`, `id_metodo`, `fecha`, `total`) VALUES
 (11, 2, '2023-10-11 17:20:00', 50.00);
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `categorias`
+-- Indices de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id_categoria`);
 
 --
--- Indexes for table `funciones`
+-- Indices de la tabla `funciones`
 --
 ALTER TABLE `funciones`
   ADD PRIMARY KEY (`id_funcion`),
@@ -293,32 +339,45 @@ ALTER TABLE `funciones`
   ADD KEY `id_sala` (`id_sala`);
 
 --
--- Indexes for table `metodos_pago`
+-- Indices de la tabla `metodos_pago`
 --
 ALTER TABLE `metodos_pago`
   ADD PRIMARY KEY (`id_metodo`);
 
 --
--- Indexes for table `peliculas`
+-- Indices de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `producto_id` (`producto_id`);
+
+--
+-- Indices de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
   ADD PRIMARY KEY (`id_pelicula`);
 
 --
--- Indexes for table `peliculas_categorias`
+-- Indices de la tabla `peliculas_categorias`
 --
 ALTER TABLE `peliculas_categorias`
   ADD PRIMARY KEY (`id_pelicula`,`id_categoria`),
   ADD KEY `id_categoria` (`id_categoria`);
 
 --
--- Indexes for table `salas`
+-- Indices de la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `salas`
 --
 ALTER TABLE `salas`
   ADD PRIMARY KEY (`id_sala`);
 
 --
--- Indexes for table `tickets`
+-- Indices de la tabla `tickets`
 --
 ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id_ticket`),
@@ -326,85 +385,103 @@ ALTER TABLE `tickets`
   ADD KEY `id_funcion` (`id_funcion`);
 
 --
--- Indexes for table `ventas`
+-- Indices de la tabla `ventas`
 --
 ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id_venta`),
   ADD KEY `id_metodo` (`id_metodo`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `categorias`
+-- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `funciones`
+-- AUTO_INCREMENT de la tabla `funciones`
 --
 ALTER TABLE `funciones`
   MODIFY `id_funcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `metodos_pago`
+-- AUTO_INCREMENT de la tabla `metodos_pago`
 --
 ALTER TABLE `metodos_pago`
   MODIFY `id_metodo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `peliculas`
+-- AUTO_INCREMENT de la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
   MODIFY `id_pelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `salas`
+-- AUTO_INCREMENT de la tabla `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `salas`
 --
 ALTER TABLE `salas`
   MODIFY `id_sala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `tickets`
+-- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
   MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
--- AUTO_INCREMENT for table `ventas`
+-- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
   MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `funciones`
+-- Filtros para la tabla `funciones`
 --
 ALTER TABLE `funciones`
   ADD CONSTRAINT `funciones_ibfk_1` FOREIGN KEY (`id_pelicula`) REFERENCES `peliculas` (`id_pelicula`),
   ADD CONSTRAINT `funciones_ibfk_2` FOREIGN KEY (`id_sala`) REFERENCES `salas` (`id_sala`);
 
 --
--- Constraints for table `peliculas_categorias`
+-- Filtros para la tabla `pedidos`
+--
+ALTER TABLE `pedidos`
+  ADD CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`);
+
+--
+-- Filtros para la tabla `peliculas_categorias`
 --
 ALTER TABLE `peliculas_categorias`
   ADD CONSTRAINT `peliculas_categorias_ibfk_1` FOREIGN KEY (`id_pelicula`) REFERENCES `peliculas` (`id_pelicula`) ON DELETE CASCADE,
   ADD CONSTRAINT `peliculas_categorias_ibfk_2` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`);
 
 --
--- Constraints for table `tickets`
+-- Filtros para la tabla `tickets`
 --
 ALTER TABLE `tickets`
   ADD CONSTRAINT `tickets_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_venta`),
   ADD CONSTRAINT `tickets_ibfk_2` FOREIGN KEY (`id_funcion`) REFERENCES `funciones` (`id_funcion`);
 
 --
--- Constraints for table `ventas`
+-- Filtros para la tabla `ventas`
 --
 ALTER TABLE `ventas`
   ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`id_metodo`) REFERENCES `metodos_pago` (`id_metodo`);
