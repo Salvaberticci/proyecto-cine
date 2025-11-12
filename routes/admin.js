@@ -17,6 +17,12 @@ router.get('/usuarios/crear', userController.mostrarCrearUsuarioWeb);
 // POST /admin/usuarios - Crear nuevo usuario
 router.post('/usuarios', userController.crearUsuarioWeb);
 
+// GET /admin/usuarios/:id/editar - Mostrar formulario de edición
+router.get('/usuarios/:id/editar', userController.mostrarEditarUsuarioWeb);
+
+// POST /admin/usuarios/:id/editar - Actualizar usuario
+router.post('/usuarios/:id/editar', userController.editarUsuarioWeb);
+
 // POST /admin/usuarios/:id/desactivar - Desactivar usuario
 router.post('/usuarios/:id/desactivar', userController.desactivarUsuarioWeb);
 

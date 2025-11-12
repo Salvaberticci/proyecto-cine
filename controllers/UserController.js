@@ -287,6 +287,24 @@ class UserController {
     });
   }
 
+  // GET /admin/usuarios/:id/editar - Mostrar formulario de edición (solo admin)
+  async mostrarEditarUsuarioWeb(req, res) {
+    try {
+      const { id } = req.params;
+      const usuario = await dbService.getUsuarioById(id);
+
+      res.render('admin/editar_usuario', {
+        title: 'Editar Usuario',
+        user: req.session.user,
+        usuario: usuario,
+        error: req.query.error
+      });
+    } catch (error) {
+      console.error('Error en mostrarEditarUsuarioWeb:', error);
+      res.redirect('/admin/usuarios?error=Usuario no encontrado');
+    }
+  }
+
   // POST /admin/usuarios/:id/desactivar - Desactivar usuario (solo admin)
   async desactivarUsuarioWeb(req, res) {
     try {
@@ -495,6 +513,58 @@ class UserController {
     } catch (error) {
       console.error('Error en crearUsuarioWeb:', error);
       res.redirect('/admin/usuarios?error=Error al crear usuario: ' + error.message);
+    }
+  }
+
+  // POST /admin/usuarios/:id/editar - Actualizar usuario (web)
+  async editarUsuarioWeb(req, res) {
+    try {
+      const { id } = req.params;
+      const { username, email, role, activo } = req.body;
+
+      // Validación básica
+      if (!username || !email) {
+        return res.redirect(`/admin/usuarios/${id}/editar?error=Username y email son requeridos`);
+      }
+
+      // Validar formato de email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.redirect(`/admin/usuarios/${id}/editar?error=Formato de email inválido`);
+      }
+
+      // Verificar que el username no existe (excepto para el usuario actual)
+      try {
+        const existingUser = await dbService.getUsuarioByUsername(username);
+        if (existingUser.id !== parseInt(id)) {
+          return res.redirect(`/admin/usuarios/${id}/editar?error=El username ya está en uso`);
+        }
+      } catch (error) {
+        // Si no encuentra el usuario, continuar (es lo esperado)
+      }
+
+      // Verificar que el email no existe (excepto para el usuario actual)
+      try {
+        const existingUser = await dbService.getUsuarioByEmail(email);
+        if (existingUser.id !== parseInt(id)) {
+          return res.redirect(`/admin/usuarios/${id}/editar?error=El email ya está registrado`);
+        }
+      } catch (error) {
+        // Si no encuentra el usuario, continuar (es lo esperado)
+      }
+
+      // Actualizar usuario
+      await dbService.updateUsuario(id, {
+        username,
+        email,
+        role,
+        activo: activo ? 1 : 0
+      });
+
+      res.redirect('/admin/usuarios?success=Usuario actualizado exitosamente');
+    } catch (error) {
+      console.error('Error en editarUsuarioWeb:', error);
+      res.redirect(`/admin/usuarios/${req.params.id}/editar?error=Error al actualizar usuario: ${error.message}`);
     }
   }
 }
