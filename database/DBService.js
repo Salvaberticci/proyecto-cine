@@ -786,6 +786,199 @@ class DBService {
       throw new Error('Error al eliminar función: ' + error.message);
     }
   }
+
+  // ========== MÉTODOS CRUD PARA USUARIOS ==========
+
+  // CREATE - Crear un nuevo usuario
+  async createUsuario(userData) {
+    try {
+      const query = `
+        INSERT INTO usuarios (username, email, password_hash, role, activo)
+        VALUES (?, ?, ?, ?, ?)
+      `;
+      const [result] = await this.connection.execute(query, [
+        userData.username,
+        userData.email,
+        userData.password_hash,
+        userData.role || 'user',
+        userData.activo !== undefined ? userData.activo : 1
+      ]);
+
+      // Obtener el usuario creado (sin password_hash por seguridad)
+      const [rows] = await this.connection.execute(
+        'SELECT id, username, email, role, activo, fecha_creacion, fecha_actualizacion FROM usuarios WHERE id = ?',
+        [result.insertId]
+      );
+
+      return rows[0];
+    } catch (error) {
+      throw new Error('Error al crear usuario: ' + error.message);
+    }
+  }
+
+  // READ - Obtener todos los usuarios
+  async getAllUsuarios() {
+    try {
+      const [rows] = await this.connection.execute(
+        'SELECT id, username, email, role, activo, fecha_creacion, fecha_actualizacion FROM usuarios ORDER BY id DESC'
+      );
+      return rows;
+    } catch (error) {
+      throw new Error('Error al obtener usuarios: ' + error.message);
+    }
+  }
+
+  // READ - Obtener usuario por ID
+  async getUsuarioById(id) {
+    try {
+      const [rows] = await this.connection.execute(
+        'SELECT id, username, email, role, activo, fecha_creacion, fecha_actualizacion FROM usuarios WHERE id = ?',
+        [parseInt(id)]
+      );
+
+      if (rows.length === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      return rows[0];
+    } catch (error) {
+      if (error.message.includes('Usuario no encontrado')) {
+        throw error;
+      }
+      throw new Error('Error al obtener usuario: ' + error.message);
+    }
+  }
+
+  // READ - Obtener usuario por username (para login)
+  async getUsuarioByUsername(username) {
+    try {
+      const [rows] = await this.connection.execute(
+        'SELECT * FROM usuarios WHERE username = ? AND activo = 1',
+        [username]
+      );
+
+      if (rows.length === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      return rows[0];
+    } catch (error) {
+      if (error.message.includes('Usuario no encontrado')) {
+        throw error;
+      }
+      throw new Error('Error al obtener usuario: ' + error.message);
+    }
+  }
+
+  // READ - Obtener usuario por email
+  async getUsuarioByEmail(email) {
+    try {
+      const [rows] = await this.connection.execute(
+        'SELECT id, username, email, role, activo, fecha_creacion, fecha_actualizacion FROM usuarios WHERE email = ?',
+        [email]
+      );
+
+      if (rows.length === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      return rows[0];
+    } catch (error) {
+      if (error.message.includes('Usuario no encontrado')) {
+        throw error;
+      }
+      throw new Error('Error al obtener usuario: ' + error.message);
+    }
+  }
+
+  // UPDATE - Actualizar usuario completo
+  async updateUsuario(id, userData) {
+    try {
+      const query = `
+        UPDATE usuarios
+        SET username = ?, email = ?, role = ?, activo = ?
+        WHERE id = ?
+      `;
+      const [result] = await this.connection.execute(query, [
+        userData.username,
+        userData.email,
+        userData.role,
+        userData.activo !== undefined ? userData.activo : 1,
+        parseInt(id)
+      ]);
+
+      if (result.affectedRows === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      // Obtener el usuario actualizado
+      const [rows] = await this.connection.execute(
+        'SELECT id, username, email, role, activo, fecha_creacion, fecha_actualizacion FROM usuarios WHERE id = ?',
+        [parseInt(id)]
+      );
+
+      return rows[0];
+    } catch (error) {
+      if (error.message.includes('Usuario no encontrado')) {
+        throw error;
+      }
+      throw new Error('Error al actualizar usuario: ' + error.message);
+    }
+  }
+
+  // UPDATE - Actualizar contraseña
+  async updateUsuarioPassword(id, passwordHash) {
+    try {
+      const query = `
+        UPDATE usuarios
+        SET password_hash = ?
+        WHERE id = ?
+      `;
+      const [result] = await this.connection.execute(query, [
+        passwordHash,
+        parseInt(id)
+      ]);
+
+      if (result.affectedRows === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      return { id: parseInt(id), updated: true };
+    } catch (error) {
+      if (error.message.includes('Usuario no encontrado')) {
+        throw error;
+      }
+      throw new Error('Error al actualizar contraseña: ' + error.message);
+    }
+  }
+
+  // DELETE - Eliminar usuario por ID (desactivar)
+  async deleteUsuario(id) {
+    try {
+      // Primero verificar que el usuario existe
+      const [rows] = await this.connection.execute(
+        'SELECT id, username, email FROM usuarios WHERE id = ?',
+        [parseInt(id)]
+      );
+
+      if (rows.length === 0) {
+        throw new Error('Usuario no encontrado');
+      }
+
+      // Desactivar usuario en lugar de eliminar físicamente
+      await this.connection.execute(
+        'UPDATE usuarios SET activo = 0 WHERE id = ?',
+        [parseInt(id)]
+      );
+
+      return rows[0];
+    } catch (error) {
+      if (error.message.includes('Usuario no encontrado')) {
+        throw error;
+      }
+      throw new Error('Error al eliminar usuario: ' + error.message);
+    }
+  }
 }
 
 module.exports = new DBService();
