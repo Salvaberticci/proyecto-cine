@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Insert default admin user (password: admin123 - change this in production!)
 -- Password hash generated with bcrypt, 10 rounds
 INSERT INTO `usuarios` (`username`, `email`, `password_hash`, `role`, `activo`) VALUES
-('admin', 'admin@cine.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 1);
+('admin', 'admin@cine.com', '$2b$10$IeyDE0DtGmqpSFl8r25.KesEvsH/C9OcxDOC90MzMfref6oykzeNq', 'admin', 1);
 
 -- Insert sample users
 INSERT INTO `usuarios` (`username`, `email`, `password_hash`, `role`, `activo`) VALUES
-('usuario1', 'usuario1@cine.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'user', 1),
-('invitado', 'invitado@cine.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'guest', 1);
+('usuario1', 'usuario1@cine.com', '$2b$10$IeyDE0DtGmqpSFl8r25.KesEvsH/C9OcxDOC90MzMfref6oykzeNq', 'user', 1),
+('invitado', 'invitado@cine.com', '$2b$10$IeyDE0DtGmqpSFl8r25.KesEvsH/C9OcxDOC90MzMfref6oykzeNq', 'guest', 1);
