@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
@@ -19,6 +20,9 @@ const metodosPagoRouter = require('./routes/MetodosPagoRouter');
 const productosRouter = require('./routes/productos');
 const pedidosRouter = require('./routes/pedidos');
 
+// Import router de autenticación
+const authRouter = require('./routes/auth');
+
 // Use routers existentes (manejan tanto rutas API como de vistas)
 app.use('/', peliculasRouter);
 app.use('/', funcionesRouter);
@@ -29,6 +33,9 @@ app.use('/', metodosPagoRouter);
 app.use('/', productosRouter);
 app.use('/', pedidosRouter);
 
+// Use router de autenticación
+app.use('/auth', authRouter);
+
 // Ruta raíz para mostrar navegación básica
 app.get('/', (req, res) => {
   res.render('index', {
@@ -37,7 +44,7 @@ app.get('/', (req, res) => {
   });
 });
 
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
