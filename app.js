@@ -82,7 +82,7 @@ app.get('/dashboard', require('./middleware/auth').requireWebAuth, (req, res) =>
   });
 });
 
-const PORT = process.env.PORT || 8888;
+const PORT = 8888; // Puerto principal
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
