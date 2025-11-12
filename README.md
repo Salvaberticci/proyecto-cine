@@ -3,10 +3,12 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-4.18+-blue.svg)](https://expressjs.com/)
 [![MariaDB](https://img.shields.io/badge/MariaDB-10.4+-orange.svg)](https://mariadb.org/)
+[![JWT](https://img.shields.io/badge/JWT-Authentication-blue.svg)](https://jwt.io/)
+[![bcrypt](https://img.shields.io/badge/bcrypt-Password_Hashing-red.svg)](https://www.npmjs.com/package/bcrypt)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-> Un sistema completo de gestión de cines construido con Node.js, Express y MariaDB, con interfaces web modernas y APIs RESTful para la gestión completa de operaciones cinematográficas.
+> Un sistema completo de gestión de cines construido con Node.js, Express y MariaDB, con interfaces web modernas y APIs RESTful para la gestión completa de operaciones cinematográficas. Incluye autenticación JWT, autorización RBAC, gestión de usuarios y seguridad avanzada.
 
 ## 📋 Tabla de Contenidos
 
@@ -31,6 +33,9 @@
 ## ✨ Características
 
 ### 🎯 Funcionalidad Principal
+- **🔐 Autenticación JWT**: Sistema seguro de login con JSON Web Tokens
+- **👥 Gestión de Usuarios**: CRUD completo para administración de usuarios con roles
+- **🛡️ Autorización RBAC**: Control de acceso basado en roles (admin, user, guest)
 - **🎭 Gestión de Películas**: Operaciones CRUD completas para películas con categorías
 - **🎪 Gestión de Funciones**: Programación y gestión de proyecciones de películas
 - **🏢 Gestión de Salas**: Manejo de múltiples salas de proyección con control de capacidad
@@ -103,6 +108,9 @@ graph TB
 - **mysql2** - Cliente de base de datos con Promises
 - **dotenv** - Gestión de variables de entorno
 - **EJS** - Motor de plantillas
+- **jsonwebtoken** - Autenticación JWT
+- **bcrypt** - Hashing de contraseñas
+- **express-session** - Gestión de sesiones web
 
 ### Frontend
 - **HTML5** - Marcado semántico
@@ -127,16 +135,21 @@ proyecto-cine-glorimar/
 │   ├── SalasController.js
 │   ├── MetodosPagoController.js
 │   ├── ProductoController.js
-│   └── PedidoController.js
+│   ├── PedidoController.js
+│   └── UserController.js      # 👥 User management controller
 ├── 📂 routes/               # 🛣️ Express route handlers
 │   ├── PeliculasRouter.js
 │   ├── FuncionesRouter.js
 │   ├── SalasRouter.js
 │   ├── MetodosPagoRouter.js
 │   ├── productos.js
-│   └── pedidos.js
+│   ├── pedidos.js
+│   ├── auth.js               # 🔐 Authentication routes
+│   └── admin.js              # 👑 Admin routes
 ├── 📂 views/                # 🎨 EJS templates
 │   ├── index.ejs
+│   ├── login.ejs             # 🔑 Login form
+│   ├── dashboard.ejs         # 📊 Admin dashboard
 │   ├── error.ejs
 │   ├── 📂 peliculas/
 │   │   ├── listar.ejs
@@ -158,11 +171,19 @@ proyecto-cine-glorimar/
 │   │   ├── listar.ejs
 │   │   ├── crear.ejs
 │   │   └── editar.ejs
-│   └── 📂 pedidos/
-│       ├── listar.ejs
-│       └── crear.ejs
+│   ├── 📂 pedidos/
+│   │   ├── listar.ejs
+│   │   └── crear.ejs
+│   └── 📂 admin/             # 👑 Admin views
+│       ├── listar_usuarios.ejs
+│       ├── crear_usuario.ejs
+│       └── editar_usuario.ejs
 ├── 📂 database/            # 🗄️ Database services
 │   └── DBService.js
+├── 📂 middleware/           # 🛡️ Security middleware
+│   └── auth.js              # 🔐 Authentication & authorization
+├── 📂 migrations/           # 🗄️ Database migrations
+│   └── create_users_table.sql
 ├── 📂 docs/                # 📚 Documentation
 │   ├── DATABASE_SCHEMA.md
 │   ├── SCREENSHOTS.md
@@ -258,6 +279,9 @@ Después de ejecutar la migración, estarán disponibles estos usuarios de prueb
 **⚠️ Importante**: Cambia las contraseñas por defecto en producción.
 
 ### URLs de Acceso Directo
+- **Login**: http://localhost:3002/login
+- **Dashboard**: http://localhost:3002/dashboard (requiere login)
+- **Admin - Usuarios**: http://localhost:3002/admin/usuarios (solo admin)
 - **Películas**: http://localhost:3002/peliculas
 - **Funciones**: http://localhost:3002/funciones
 - **Salas**: http://localhost:3002/salas
@@ -382,7 +406,7 @@ Después de ejecutar la migración, estarán disponibles estos usuarios de prueb
 El sistema implementa autenticación JWT (JSON Web Tokens) con autorización basada en roles (RBAC).
 
 #### Roles de Usuario
-- **admin**: Acceso completo a todas las operaciones, incluyendo eliminación de datos
+- **admin**: Acceso completo a todas las operaciones, incluyendo eliminación de datos y gestión de usuarios
 - **user**: Acceso a operaciones CRUD de productos y pedidos
 - **guest**: Acceso limitado a visualización de información pública
 
@@ -394,6 +418,15 @@ El sistema implementa autenticación JWT (JSON Web Tokens) con autorización bas
 | `POST` | `/auth/register` | Registrar usuario | Público |
 | `POST` | `/auth/logout` | Cerrar sesión | Público |
 | `GET` | `/auth/me` | Información del usuario actual | Autenticado |
+
+#### Endpoints de Gestión de Usuarios
+
+| Método | Endpoint | Descripción | Rol Requerido |
+|--------|----------|-------------|---------------|
+| `GET` | `/auth/usuarios` | Listar todos los usuarios | admin |
+| `GET` | `/auth/usuarios/:id` | Obtener usuario por ID | admin |
+| `PUT` | `/auth/usuarios/:id` | Actualizar usuario | admin |
+| `DELETE` | `/auth/usuarios/:id` | Desactivar usuario | admin |
 
 #### Uso de JWT
 ```bash
@@ -475,6 +508,9 @@ curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
 ## 🗄️ Esquema de Base de Datos
 
 ```sql
+-- User Management (Authentication & Authorization)
+usuarios (id, username, email, password_hash, role, activo, fecha_creacion, fecha_actualizacion)
+
 -- Core Entities
 peliculas (id_pelicula, titulo, anio, duracion)
 salas (id_sala, nombre, capacidad)
@@ -648,7 +684,7 @@ npm run test:e2e
 
 ## 📝 Registro de Cambios
 
-### [v3.0.0] - 2025-11-XX
+### [v3.0.0] - 2025-11-12
 - ✅ **Autenticación JWT**: Sistema completo de login con JSON Web Tokens
 - ✅ **Autorización RBAC**: Control de acceso basado en roles (admin, user, guest)
 - ✅ **Seguridad mejorada**: Contraseñas hasheadas con bcrypt, variables de entorno seguras
@@ -656,6 +692,10 @@ npm run test:e2e
 - ✅ **Gestión de usuarios**: CRUD completo para administración de usuarios
 - ✅ **Migraciones de BD**: Scripts automatizados para configuración de usuarios
 - ✅ **Documentación actualizada**: Guía completa de autenticación y configuración
+- ✅ **Interfaz de administración**: Dashboard y formularios para gestión de usuarios
+- ✅ **Validación de entrada**: Validación completa en todos los endpoints
+- ✅ **Protección de rutas**: Diferentes niveles de acceso según roles
+- ✅ **Sesiones web**: Gestión de sesiones para interfaz administrativa
 
 ### [v2.0.0] - 2025-10-XX
 - ✅ **Base de datos real**: Migración completa de variables a MySQL/MariaDB
