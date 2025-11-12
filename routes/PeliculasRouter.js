@@ -1,41 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const peliculasController = require('../controllers/PeliculasController');
+const { authenticateToken, requireUserOrAdmin, requireAdmin } = require('../middleware/auth');
 
 // ========== RUTAS API (Retornan JSON) ==========
 // Prefijo: /api/peliculas
 
-// GET /api/peliculas - Lista todas las películas
+// GET /api/peliculas - Lista todas las películas (público)
 router.get('/api/peliculas', peliculasController.apiListar);
 
-// GET /api/peliculas/:id - Muestra detalle de una película por ID
+// GET /api/peliculas/:id - Muestra detalle de una película por ID (público)
 router.get('/api/peliculas/:id', peliculasController.apiObtener);
 
-// POST /api/peliculas - Crea una nueva película
-router.post('/api/peliculas', peliculasController.apiCrear);
+// POST /api/peliculas - Crea una nueva película (requiere user o admin)
+router.post('/api/peliculas', authenticateToken, requireUserOrAdmin, peliculasController.apiCrear);
 
-// PUT /api/peliculas/:id - Modifica todos los datos de una película
-router.put('/api/peliculas/:id', peliculasController.apiActualizar);
+// PUT /api/peliculas/:id - Modifica todos los datos de una película (requiere user o admin)
+router.put('/api/peliculas/:id', authenticateToken, requireUserOrAdmin, peliculasController.apiActualizar);
 
-// DELETE /api/peliculas/:id - Elimina una película por ID
-router.delete('/api/peliculas/:id', peliculasController.apiEliminar);
+// DELETE /api/peliculas/:id - Elimina una película por ID (solo admin)
+router.delete('/api/peliculas/:id', authenticateToken, requireAdmin, peliculasController.apiEliminar);
 
 // ========== RUTAS DE VISTAS (Retornan HTML con EJS) ==========
 // Prefijo: /peliculas
 
-// GET /peliculas - Lista de películas
+// GET /peliculas - Lista de películas (público)
 router.get('/peliculas', peliculasController.listar);
 
-// GET /peliculas/crear - Formulario de Creación de película
-router.get('/peliculas/crear', peliculasController.crearForm);
+// GET /peliculas/crear - Formulario de Creación de película (requiere user o admin)
+router.get('/peliculas/crear', authenticateToken, requireUserOrAdmin, peliculasController.crearForm);
 
-// POST /peliculas - Procesa creación de película desde formulario
-router.post('/peliculas', peliculasController.crear);
+// POST /peliculas - Procesa creación de película desde formulario (requiere user o admin)
+router.post('/peliculas', authenticateToken, requireUserOrAdmin, peliculasController.crear);
 
-// GET /peliculas/:id/editar - Formulario de Edición de película
-router.get('/peliculas/:id/editar', peliculasController.editarForm);
+// GET /peliculas/:id/editar - Formulario de Edición de película (requiere user o admin)
+router.get('/peliculas/:id/editar', authenticateToken, requireUserOrAdmin, peliculasController.editarForm);
 
-// POST /peliculas/:id/editar - Procesa edición de película desde formulario
-router.post('/peliculas/:id/editar', peliculasController.editar);
+// POST /peliculas/:id/editar - Procesa edición de película desde formulario (requiere user o admin)
+router.post('/peliculas/:id/editar', authenticateToken, requireUserOrAdmin, peliculasController.editar);
 
 module.exports = router;
