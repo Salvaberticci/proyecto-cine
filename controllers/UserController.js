@@ -181,6 +181,151 @@ class UserController {
     }
   }
 
+  // ========== MÉTODOS PARA AUTENTICACIÓN WEB (CON SESIONES) ==========
+
+  // GET /login - Mostrar formulario de login
+  showLoginForm(req, res) {
+    // Si ya está logueado, redirigir al dashboard
+    if (req.session.user) {
+      return res.redirect('/dashboard');
+    }
+
+    res.render('login', {
+      title: 'Iniciar Sesión',
+      error: req.query.error,
+      success: req.query.success
+    });
+  }
+
+  // POST /auth/login-web - Procesar login web con sesiones
+  async loginWeb(req, res) {
+    try {
+      const { username, password } = req.body;
+
+      // Validación básica
+      if (!username || !password) {
+        return res.render('login', {
+          title: 'Iniciar Sesión',
+          error: 'Usuario y contraseña son requeridos'
+        });
+      }
+
+      // Buscar usuario por username
+      const user = await dbService.getUsuarioByUsername(username);
+
+      // Verificar contraseña
+      const bcrypt = require('bcrypt');
+      const isValidPassword = await bcrypt.compare(password, user.password_hash);
+
+      if (!isValidPassword) {
+        return res.render('login', {
+          title: 'Iniciar Sesión',
+          error: 'Credenciales inválidas'
+        });
+      }
+
+      // Crear sesión
+      req.session.user = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role
+      };
+
+      // Redirigir al dashboard
+      res.redirect('/dashboard');
+
+    } catch (error) {
+      console.error('Error en loginWeb:', error);
+      res.render('login', {
+        title: 'Iniciar Sesión',
+        error: 'Error al iniciar sesión: ' + error.message
+      });
+    }
+  }
+
+  // POST /auth/logout-web - Cerrar sesión web
+  logoutWeb(req, res) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error al cerrar sesión:', err);
+      }
+      res.redirect('/login');
+    });
+  }
+
+  // ========== MÉTODOS PARA GESTIÓN WEB DE USUARIOS (ADMIN) ==========
+
+  // GET /admin/usuarios - Listar usuarios (solo admin)
+  async listarUsuariosWeb(req, res) {
+    try {
+      const usuarios = await dbService.getAllUsuarios();
+      res.render('admin/usuarios', {
+        title: 'Gestión de Usuarios',
+        user: req.session.user,
+        usuarios: usuarios,
+        error: req.query.error,
+        success: req.query.success
+      });
+    } catch (error) {
+      console.error('Error en listarUsuariosWeb:', error);
+      res.render('admin/usuarios', {
+        title: 'Gestión de Usuarios',
+        user: req.session.user,
+        usuarios: [],
+        error: 'Error al cargar usuarios: ' + error.message
+      });
+    }
+  }
+
+  // GET /admin/usuarios/crear - Mostrar formulario de creación (solo admin)
+  mostrarCrearUsuarioWeb(req, res) {
+    res.render('admin/crear_usuario', {
+      title: 'Crear Usuario',
+      user: req.session.user,
+      error: req.query.error
+    });
+  }
+
+  // POST /admin/usuarios/:id/desactivar - Desactivar usuario (solo admin)
+  async desactivarUsuarioWeb(req, res) {
+    try {
+      const { id } = req.params;
+
+      // No permitir desactivar al propio usuario
+      if (parseInt(id) === req.session.user.id) {
+        return res.redirect('/admin/usuarios?error=No puedes desactivar tu propia cuenta');
+      }
+
+      await dbService.deleteUsuario(id);
+      res.redirect('/admin/usuarios?success=Usuario desactivado exitosamente');
+    } catch (error) {
+      console.error('Error en desactivarUsuarioWeb:', error);
+      res.redirect('/admin/usuarios?error=Error al desactivar usuario: ' + error.message);
+    }
+  }
+
+  // POST /admin/usuarios/:id/activar - Activar usuario (solo admin)
+  async activarUsuarioWeb(req, res) {
+    try {
+      const { id } = req.params;
+      const usuario = await dbService.getUsuarioById(id);
+
+      // Reactivar usuario cambiando activo a true
+      await dbService.updateUsuario(id, {
+        username: usuario.username,
+        email: usuario.email,
+        role: usuario.role,
+        activo: 1
+      });
+
+      res.redirect('/admin/usuarios?success=Usuario activado exitosamente');
+    } catch (error) {
+      console.error('Error en activarUsuarioWeb:', error);
+      res.redirect('/admin/usuarios?error=Error al activar usuario: ' + error.message);
+    }
+  }
+
   // ========== MÉTODOS PARA GESTIÓN DE USUARIOS (ADMIN) ==========
 
   // GET /api/usuarios - Lista todos los usuarios (solo admin)
@@ -293,6 +438,63 @@ class UserController {
         message: 'Error interno del servidor',
         error: error.message
       });
+    }
+  }
+
+  // POST /admin/usuarios - Crear nuevo usuario (web)
+  async crearUsuarioWeb(req, res) {
+    try {
+      const { username, email, password, role } = req.body;
+
+      // Validación básica
+      if (!username || !email || !password) {
+        return res.redirect('/admin/usuarios?error=Username, email y password son requeridos');
+      }
+
+      // Validar formato de email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.redirect('/admin/usuarios?error=Formato de email inválido');
+      }
+
+      // Validar longitud de password
+      if (password.length < 6) {
+        return res.redirect('/admin/usuarios?error=La contraseña debe tener al menos 6 caracteres');
+      }
+
+      // Verificar que el username no existe
+      try {
+        await dbService.getUsuarioByUsername(username);
+        return res.redirect('/admin/usuarios?error=El username ya está en uso');
+      } catch (error) {
+        // Si no encuentra el usuario, continuar (es lo esperado)
+      }
+
+      // Verificar que el email no existe
+      try {
+        await dbService.getUsuarioByEmail(email);
+        return res.redirect('/admin/usuarios?error=El email ya está registrado');
+      } catch (error) {
+        // Si no encuentra el usuario, continuar (es lo esperado)
+      }
+
+      // Hash de la contraseña
+      const bcrypt = require('bcrypt');
+      const saltRounds = parseInt(process.env.BCRYPT_ROUNDS) || 10;
+      const passwordHash = await bcrypt.hash(password, saltRounds);
+
+      // Crear usuario
+      await dbService.createUsuario({
+        username,
+        email,
+        password_hash: passwordHash,
+        role: role || 'user'
+      });
+
+      res.redirect('/admin/usuarios?success=Usuario creado exitosamente');
+    } catch (error) {
+      console.error('Error en crearUsuarioWeb:', error);
+      res.redirect('/admin/usuarios?error=Error al crear usuario: ' + error.message);
     }
   }
 }

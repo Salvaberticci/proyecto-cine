@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const peliculasController = require('../controllers/PeliculasController');
-const { authenticateToken, requireUserOrAdmin, requireAdmin } = require('../middleware/auth');
+const { authenticateToken, requireUserOrAdmin, requireAdmin, requireWebAuth, requireWebRole } = require('../middleware/auth');
 
 // ========== RUTAS API (Retornan JSON) ==========
 // Prefijo: /api/peliculas
@@ -28,15 +28,15 @@ router.delete('/api/peliculas/:id', authenticateToken, requireAdmin, peliculasCo
 router.get('/peliculas', peliculasController.listar);
 
 // GET /peliculas/crear - Formulario de Creación de película (requiere user o admin)
-router.get('/peliculas/crear', authenticateToken, requireUserOrAdmin, peliculasController.crearForm);
+router.get('/peliculas/crear', requireWebAuth, requireWebRole('user'), peliculasController.crearForm);
 
 // POST /peliculas - Procesa creación de película desde formulario (requiere user o admin)
-router.post('/peliculas', authenticateToken, requireUserOrAdmin, peliculasController.crear);
+router.post('/peliculas', requireWebAuth, requireWebRole('user'), peliculasController.crear);
 
 // GET /peliculas/:id/editar - Formulario de Edición de película (requiere user o admin)
-router.get('/peliculas/:id/editar', authenticateToken, requireUserOrAdmin, peliculasController.editarForm);
+router.get('/peliculas/:id/editar', requireWebAuth, requireWebRole('user'), peliculasController.editarForm);
 
 // POST /peliculas/:id/editar - Procesa edición de película desde formulario (requiere user o admin)
-router.post('/peliculas/:id/editar', authenticateToken, requireUserOrAdmin, peliculasController.editar);
+router.post('/peliculas/:id/editar', requireWebAuth, requireWebRole('user'), peliculasController.editar);
 
 module.exports = router;

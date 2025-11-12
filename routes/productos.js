@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const productoController = require('../controllers/ProductoController');
-const { authenticateToken, requireUserOrAdmin, requireAdmin } = require('../middleware/auth');
+const { authenticateToken, requireUserOrAdmin, requireAdmin, requireWebAuth, requireWebRole } = require('../middleware/auth');
 
 // ========== RUTAS API (Retornan JSON) ==========
 // Prefijo: /api/productos
@@ -31,15 +31,15 @@ router.delete('/api/productos/:id', authenticateToken, requireAdmin, productoCon
 router.get('/productos', productoController.listar);
 
 // GET /productos/crear - Formulario de Creación de producto (requiere user o admin)
-router.get('/productos/crear', authenticateToken, requireUserOrAdmin, productoController.crearForm);
+router.get('/productos/crear', requireWebAuth, requireWebRole('user'), productoController.crearForm);
 
 // POST /productos - Procesa creación de producto desde formulario (requiere user o admin)
-router.post('/productos', authenticateToken, requireUserOrAdmin, productoController.crear);
+router.post('/productos', requireWebAuth, requireWebRole('user'), productoController.crear);
 
 // GET /productos/:id/editar - Formulario de Edición de producto (requiere user o admin)
-router.get('/productos/:id/editar', authenticateToken, requireUserOrAdmin, productoController.editarForm);
+router.get('/productos/:id/editar', requireWebAuth, requireWebRole('user'), productoController.editarForm);
 
 // POST /productos/:id/editar - Procesa edición de producto desde formulario (requiere user o admin)
-router.post('/productos/:id/editar', authenticateToken, requireUserOrAdmin, productoController.editar);
+router.post('/productos/:id/editar', requireWebAuth, requireWebRole('user'), productoController.editar);
 
 module.exports = router;

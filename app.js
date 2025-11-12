@@ -1,10 +1,22 @@
 require('dotenv').config();
 const express = require('express');
+const session = require('express-session');
 const app = express();
 
 // Configuración de EJS como motor de plantillas
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+// Middleware de sesiones
+app.use(session({
+  secret: process.env.JWT_SECRET || 'fallback-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // true en producción con HTTPS
+    maxAge: 24 * 60 * 60 * 1000 // 24 horas
+  }
+}));
 
 // Middleware
 app.use(express.json());
@@ -23,6 +35,9 @@ const pedidosRouter = require('./routes/pedidos');
 // Import router de autenticación
 const authRouter = require('./routes/auth');
 
+// Import router de administración
+const adminRouter = require('./routes/admin');
+
 // Use routers existentes (manejan tanto rutas API como de vistas)
 app.use('/', peliculasRouter);
 app.use('/', funcionesRouter);
@@ -36,15 +51,34 @@ app.use('/', pedidosRouter);
 // Use router de autenticación
 app.use('/auth', authRouter);
 
-// Ruta raíz para mostrar navegación básica
+// Use router de administración
+app.use('/admin', adminRouter);
+
+// Ruta raíz - redirige según estado de autenticación
 app.get('/', (req, res) => {
-  res.render('index', {
-    title: 'Sistema de Gestión de Cine',
-    message: 'Bienvenido al sistema de gestión de productos y pedidos'
+  if (req.session.user) {
+    // Usuario autenticado - ir al dashboard
+    res.redirect('/dashboard');
+  } else {
+    // Usuario no autenticado - ir al login
+    res.redirect('/login');
+  }
+});
+
+// Página de login (pública) - ruta directa
+app.get('/login', require('./controllers/UserController').showLoginForm);
+
+// Dashboard (requiere autenticación)
+app.get('/dashboard', require('./middleware/auth').requireWebAuth, (req, res) => {
+  res.render('dashboard', {
+    title: 'Dashboard - Cine Glorimar',
+    user: req.session.user,
+    error: req.query.error,
+    success: req.query.success
   });
 });
 
-const PORT = process.env.PORT || 3002;
+const PORT = 8888;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

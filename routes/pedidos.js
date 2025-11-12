@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const pedidoController = require('../controllers/PedidoController');
-const { authenticateToken, requireUserOrAdmin, requireAdmin } = require('../middleware/auth');
+const { authenticateToken, requireUserOrAdmin, requireAdmin, requireWebAuth, requireWebRole } = require('../middleware/auth');
 
 // ========== RUTAS API (Retornan JSON) ==========
 // Prefijo: /api/pedidos
@@ -31,12 +31,12 @@ router.delete('/api/pedidos/:pedidoId/producto/:productoId', authenticateToken, 
 // Prefijo: /pedidos
 
 // GET /pedidos - Lista de pedidos (requiere user o admin)
-router.get('/pedidos', authenticateToken, requireUserOrAdmin, pedidoController.listar);
+router.get('/pedidos', requireWebAuth, requireWebRole('user'), pedidoController.listar);
 
 // GET /pedidos/crear - Formulario de Creación de pedido (requiere user o admin)
-router.get('/pedidos/crear', authenticateToken, requireUserOrAdmin, pedidoController.crearForm);
+router.get('/pedidos/crear', requireWebAuth, requireWebRole('user'), pedidoController.crearForm);
 
 // POST /pedidos - Procesa creación de pedido desde formulario (requiere user o admin)
-router.post('/pedidos', authenticateToken, requireUserOrAdmin, pedidoController.crear);
+router.post('/pedidos', requireWebAuth, requireWebRole('user'), pedidoController.crear);
 
 module.exports = router;

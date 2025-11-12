@@ -72,11 +72,39 @@ const optionalAuth = (req, res, next) => {
   next();
 };
 
+// Middleware para verificar sesión web
+const requireWebAuth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/login?error=Debes iniciar sesión para acceder a esta página');
+  }
+  next();
+};
+
+// Middleware para verificar roles en sesiones web
+const requireWebRole = (requiredRole) => {
+  return (req, res, next) => {
+    if (!req.session.user) {
+      return res.redirect('/login?error=Debes iniciar sesión para acceder a esta página');
+    }
+
+    const userRole = req.session.user.role;
+    const roleHierarchy = { guest: 1, user: 2, admin: 3 };
+
+    if (roleHierarchy[userRole] < roleHierarchy[requiredRole]) {
+      return res.redirect('/dashboard?error=No tienes permisos suficientes para acceder a esta sección');
+    }
+
+    next();
+  };
+};
+
 module.exports = {
   authenticateToken,
   authorizeRoles,
   requireAdmin,
   requireUserOrAdmin,
   requireGuestOrHigher,
-  optionalAuth
+  optionalAuth,
+  requireWebAuth,
+  requireWebRole
 };
