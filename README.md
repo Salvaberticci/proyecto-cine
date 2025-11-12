@@ -51,7 +51,7 @@
 - **🔄 APIs RESTful**: Endpoints de API completos
 - **🛡️ Manejo de Errores**: Gestión robusta de errores y validación
 - **📝 Validación de Entrada**: Validación del lado cliente y servidor
-- **🔐 Seguridad**: Manejo seguro de datos y prevención de inyección SQL
+- **🔐 Seguridad**: Autenticación JWT, autorización RBAC, contraseñas hasheadas con bcrypt
 - **⚡ Rendimiento**: Consultas optimizadas y almacenamiento en caché
 
 ## 🏗️ Arquitectura
@@ -205,14 +205,33 @@ proyecto-cine-glorimar/
     # Crear base de datos 'cine'
     mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS cine;"
 
-    # Importar esquema de base de datos
+    # Importar esquema de base de datos principal
     mysql -u root -p cine < cine.sql
+
+    # Ejecutar migración de usuarios para autenticación
+    mysql -u root -p cine < migrations/create_users_table.sql
     ```
 
 4. **Configurar variables de entorno**
     ```bash
     # El archivo .env ya está configurado con valores por defecto
     # Si necesitas cambiar las credenciales de BD, edita el archivo .env
+
+    # Estructura del archivo .env:
+    # Database Configuration
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASSWORD=
+    DB_NAME=cine
+    DB_PORT=3306
+
+    # Application Configuration
+    NODE_ENV=development
+    PORT=3002
+
+    # Security Configuration
+    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+    BCRYPT_ROUNDS=10
     ```
 
 4. **Iniciar la aplicación**
@@ -228,6 +247,15 @@ proyecto-cine-glorimar/
     - **Interfaz Web Principal**: http://localhost:3002
     - **URL Base de API**: http://localhost:3002/api
     - **Documentación API**: Ver sección "📖 Documentación de la API" abajo
+
+### Usuarios por Defecto
+Después de ejecutar la migración, estarán disponibles estos usuarios de prueba:
+
+- **Admin**: `admin` / `admin123` (rol: admin)
+- **Usuario**: `usuario1` / `admin123` (rol: user)
+- **Invitado**: `invitado` / `admin123` (rol: guest)
+
+**⚠️ Importante**: Cambia las contraseñas por defecto en producción.
 
 ### URLs de Acceso Directo
 - **Películas**: http://localhost:3002/peliculas
@@ -348,6 +376,36 @@ proyecto-cine-glorimar/
 | `POST` | `/api/pedidos` | Crear nuevo pedido | `201` - Pedido creado |
 | `PUT` | `/api/pedidos/:id` | Actualizar pedido | `200` - Pedido actualizado |
 | `DELETE` | `/api/pedidos/:pedidoId/producto/:productoId` | Eliminar relación pedido-producto | `200` - Mensaje de éxito |
+
+### 🔐 Autenticación y Autorización
+
+El sistema implementa autenticación JWT (JSON Web Tokens) con autorización basada en roles (RBAC).
+
+#### Roles de Usuario
+- **admin**: Acceso completo a todas las operaciones, incluyendo eliminación de datos
+- **user**: Acceso a operaciones CRUD de productos y pedidos
+- **guest**: Acceso limitado a visualización de información pública
+
+#### Endpoints de Autenticación
+
+| Método | Endpoint | Descripción | Rol Requerido |
+|--------|----------|-------------|---------------|
+| `POST` | `/auth/login` | Iniciar sesión | Público |
+| `POST` | `/auth/register` | Registrar usuario | Público |
+| `POST` | `/auth/logout` | Cerrar sesión | Público |
+| `GET` | `/auth/me` | Información del usuario actual | Autenticado |
+
+#### Uso de JWT
+```bash
+# Login
+curl -X POST http://localhost:3002/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username":"admin","password":"admin123"}'
+
+# Usar token en requests
+curl -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  http://localhost:3002/api/productos
+```
 
 ### Formato de Respuesta de la API
 
@@ -589,6 +647,15 @@ npm run test:e2e
 - **SQL**: Sentencias preparadas, consultas indexadas
 
 ## 📝 Registro de Cambios
+
+### [v3.0.0] - 2025-11-XX
+- ✅ **Autenticación JWT**: Sistema completo de login con JSON Web Tokens
+- ✅ **Autorización RBAC**: Control de acceso basado en roles (admin, user, guest)
+- ✅ **Seguridad mejorada**: Contraseñas hasheadas con bcrypt, variables de entorno seguras
+- ✅ **Middleware de autenticación**: Protección de rutas con middleware personalizado
+- ✅ **Gestión de usuarios**: CRUD completo para administración de usuarios
+- ✅ **Migraciones de BD**: Scripts automatizados para configuración de usuarios
+- ✅ **Documentación actualizada**: Guía completa de autenticación y configuración
 
 ### [v2.0.0] - 2025-10-XX
 - ✅ **Base de datos real**: Migración completa de variables a MySQL/MariaDB
