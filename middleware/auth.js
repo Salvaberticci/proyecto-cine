@@ -1,28 +1,33 @@
 // middleware/auth.js - Middleware de autenticación y autorización
 const jwt = require('jsonwebtoken');
 
-// Middleware para verificar JWT
+// Middleware para verificar JWT o sesión web
 const authenticateToken = (req, res, next) => {
+  // Primero intentar con JWT (para APIs)
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: 'Token de acceso requerido'
+  if (token) {
+    // Si hay token JWT, usarlo
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (!err) {
+        req.user = user;
+        return next();
+      }
+      // Si el token es inválido, continuar con verificación de sesión
     });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({
-        success: false,
-        message: 'Token inválido o expirado'
-      });
-    }
+  // Si no hay token JWT o es inválido, verificar sesión web
+  if (req.session && req.session.user) {
+    req.user = req.session.user;
+    return next();
+  }
 
-    req.user = user; // Guardar información del usuario en la request
-    next();
+  // Si no hay ni token ni sesión, devolver error
+  return res.status(401).json({
+    success: false,
+    message: 'Token de acceso requerido'
   });
 };
 
@@ -47,11 +52,62 @@ const authorizeRoles = (...allowedRoles) => {
   };
 };
 
-// Middleware específico para admin
-const requireAdmin = authorizeRoles('admin');
+// Middleware específico para admin (acepta JWT o sesión)
+const requireAdmin = (req, res, next) => {
+  // Primero intentar con JWT
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
-// Middleware específico para user o admin
-const requireUserOrAdmin = authorizeRoles('user', 'admin');
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (!err && user.role === 'admin') {
+        req.user = user;
+        return next();
+      }
+    });
+  }
+
+  // Si no hay token JWT válido, verificar sesión web
+  if (req.session && req.session.user && req.session.user.role === 'admin') {
+    req.user = req.session.user;
+    return next();
+  }
+
+  return res.status(401).json({
+    success: false,
+    message: 'Token de acceso requerido o permisos de administrador necesarios'
+  });
+};
+
+// Middleware específico para user o admin (acepta JWT o sesión)
+const requireUserOrAdmin = (req, res, next) => {
+  // Primero intentar con JWT
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+      if (!err && (user.role === 'user' || user.role === 'admin')) {
+        req.user = user;
+        return next();
+      }
+    });
+  }
+
+  // Si no hay token JWT válido, verificar sesión web
+  if (req.session && req.session.user) {
+    const userRole = req.session.user.role;
+    if (userRole === 'user' || userRole === 'admin') {
+      req.user = req.session.user;
+      return next();
+    }
+  }
+
+  return res.status(401).json({
+    success: false,
+    message: 'Token de acceso requerido o permisos insuficientes'
+  });
+};
 
 // Middleware específico para guest, user o admin
 const requireGuestOrHigher = authorizeRoles('guest', 'user', 'admin');

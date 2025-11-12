@@ -185,7 +185,9 @@ class PeliculasController {
       const peliculas = await dbService.getAllPeliculas();
       res.render('peliculas/listar', {
         title: 'Lista de Películas',
-        peliculas: peliculas
+        peliculas: peliculas,
+        error: req.query.error,
+        success: req.query.success
       });
     } catch (error) {
       console.error('Error en listar películas:', error);
@@ -334,6 +336,22 @@ class PeliculasController {
           error: error.message
         });
       }
+    }
+  }
+
+  // DELETE /peliculas/:id - Elimina una película desde vista web
+  async eliminar(req, res) {
+    try {
+      const { id } = req.params;
+      await dbService.deletePelicula(id);
+
+      res.redirect('/peliculas?success=Película eliminada exitosamente');
+    } catch (error) {
+      console.error('Error en eliminar película:', error);
+      if (error.message.includes('no encontrada')) {
+        return res.redirect('/peliculas?error=Película no encontrada');
+      }
+      res.redirect('/peliculas?error=Error al eliminar la película');
     }
   }
 }

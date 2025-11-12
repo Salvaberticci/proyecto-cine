@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const methodOverride = require('method-override');
 const app = express();
 
 // Configuración de EJS como motor de plantillas
@@ -17,6 +18,9 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000 // 24 horas
   }
 }));
+
+// Middleware para method override
+app.use(methodOverride('_method'));
 
 // Middleware
 app.use(express.json());

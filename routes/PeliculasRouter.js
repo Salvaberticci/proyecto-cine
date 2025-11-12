@@ -39,4 +39,7 @@ router.get('/peliculas/:id/editar', requireWebAuth, requireWebRole('user'), peli
 // POST /peliculas/:id/editar - Procesa edición de película desde formulario (requiere user o admin)
 router.post('/peliculas/:id/editar', requireWebAuth, requireWebRole('user'), peliculasController.editar);
 
+// DELETE /peliculas/:id - Elimina una película (requiere admin)
+router.delete('/peliculas/:id', requireWebAuth, requireWebRole('admin'), peliculasController.eliminar);
+
 module.exports = router;
