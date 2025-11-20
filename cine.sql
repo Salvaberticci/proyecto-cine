@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2025 a las 01:15:24
+-- Tiempo de generación: 20-11-2025 a las 14:50:33
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -144,7 +144,8 @@ INSERT INTO `peliculas` (`id_pelicula`, `titulo`, `anio`, `duracion`) VALUES
 (5, 'Jurassic Park', 1993, 127),
 (6, 'Inception', 2010, 148),
 (7, 'The Matrix', 1999, 136),
-(8, 'Forrest Gump', 1994, 142);
+(8, 'Forrest Gump', 1994, 142),
+(12, 'Batman', 2012, 185);
 
 -- --------------------------------------------------------
 
@@ -293,6 +294,34 @@ INSERT INTO `tickets` (`id_ticket`, `id_venta`, `id_funcion`, `asiento`, `precio
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `role` enum('admin','user','guest') NOT NULL DEFAULT 'user',
+  `activo` tinyint(1) NOT NULL DEFAULT 1,
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `username`, `email`, `password_hash`, `role`, `activo`, `fecha_creacion`, `fecha_actualizacion`) VALUES
+(1, 'admin', 'admin@cine.com', '$2b$10$IeyDE0DtGmqpSFl8r25.KesEvsH/C9OcxDOC90MzMfref6oykzeNq', 'admin', 1, '2025-11-12 14:08:40', '2025-11-12 14:08:40'),
+(2, 'usuario1', 'usuario1@cine.com', '$2b$10$IeyDE0DtGmqpSFl8r25.KesEvsH/C9OcxDOC90MzMfref6oykzeNq', 'user', 1, '2025-11-12 14:08:40', '2025-11-12 14:08:40'),
+(3, 'invitado', 'invitado@cine.com', '$2b$10$IeyDE0DtGmqpSFl8r25.KesEvsH/C9OcxDOC90MzMfref6oykzeNq', 'guest', 1, '2025-11-12 14:08:40', '2025-11-12 14:08:40'),
+(4, 'testuser', 'test@example.com', '$2b$10$bYbhnqHFTw.45hgfeKj.luxa7Q/bDS2MJs9k9kUWUb7mV2qQcqBpe', 'user', 1, '2025-11-12 14:57:04', '2025-11-12 14:57:04'),
+(5, 'prueba', 'prueba@gmail.com', '$2b$10$R136BsMPSb7opRZd9MzPfuZbR.5HaPpMY9ATQQP.OBjlcOi2aHAGa', 'user', 0, '2025-11-12 14:58:08', '2025-11-12 16:03:57');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `ventas`
 --
 
@@ -385,6 +414,14 @@ ALTER TABLE `tickets`
   ADD KEY `id_funcion` (`id_funcion`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indices de la tabla `ventas`
 --
 ALTER TABLE `ventas`
@@ -423,7 +460,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
-  MODIFY `id_pelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_pelicula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -442,6 +479,12 @@ ALTER TABLE `salas`
 --
 ALTER TABLE `tickets`
   MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
